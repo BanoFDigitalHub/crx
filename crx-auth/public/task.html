@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasks - CRX Earning</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8f9fa;
+  color: #1a1a1a;
+  padding-bottom: 70px;
+  overflow-x: hidden;
+}
+
+.header {
+  background: #fff;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wallet-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bell-icon {
+  width: 40px;
+  height: 40px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.bell-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: #4a5568;
+}
+
+.page-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 24px 20px;
+  color: #fff;
+}
+
+.page-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.page-header p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.content {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #718096;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.stat-subtitle {
+  font-size: 11px;
+  color: #a0aec0;
+  margin-top: 4px;
+}
+
+.info-banner {
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+  border-left: 4px solid #667eea;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+
+.info-banner.success {
+  background: linear-gradient(135deg, #d4f4dd 0%, #c3e6cb 100%);
+  border-left-color: #28a745;
+}
+
+.info-banner.warning {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+  border-left-color: #ffc107;
+}
+
+.info-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.info-content {
+  flex: 1;
+}
+
+.info-content h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #1a1a1a;
+}
+
+.info-content p {
+  font-size: 13px;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.video-grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.video-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.video-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.video-card.watched {
+  background: linear-gradient(135deg, #d4f4dd 0%, #c3e6cb 100%);
+  border-color: #28a745;
+  cursor: default;
+}
+
+.video-card.watched:hover {
+  transform: none;
+}
+
+.video-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.video-number {
+  font-size: 16px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.video-card.watched .video-number {
+  color: #28a745;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.watched {
+  background: #28a745;
+  color: #fff;
+}
+
+.video-info {
+  font-size: 13px;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+.video-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.video-card.watched .video-action {
+  color: #28a745;
+}
+
+.collect-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+}
+
+.collect-section h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.collect-section p {
+  font-size: 13px;
+  color: #718096;
+  margin-bottom: 16px;
+}
+
+.profit-amount {
+  font-size: 32px;
+  font-weight: 700;
+  color: #28a745;
+  margin: 16px 0;
+}
+
+.btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-success {
+  background: #28a745;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background: #218838;
+}
+
+.btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s;
+}
+
+.modal.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.modal-close {
+  cursor: pointer;
+  font-size: 24px;
+  color: #718096;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: #f1f3f5;
+  color: #1a1a1a;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #000;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.progress-section {
+  margin-top: 20px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.timer-display {
+  font-size: 24px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.percent-display {
+  font-size: 14px;
+  font-weight: 600;
+  color: #718096;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  width: 0%;
+  transition: width 0.3s;
+  border-radius: 4px;
+}
+
+.progress-fill.complete {
+  background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #718096;
+}
+
+.modal-footer {
+  padding: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: #a0aec0;
+  transition: color 0.2s;
+  padding: 4px 12px;
+  position: relative;
+}
+
+.nav-item.active {
+  color: #667eea;
+}
+
+.nav-item svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+}
+
+.nav-item span {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.nav-notification {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #718096;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
+  }
+
+  .content {
+    padding: 40px;
+  }
+
+  .page-header {
+    padding: 32px 40px;
+  }
+
+  .page-header h1 {
+    font-size: 32px;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .video-card {
+    padding: 20px;
+  }
+
+  .bottom-nav {
+    display: none;
+  }
+
+  .modal-content {
+    max-width: 900px;
+  }
+}
+</style>
+<script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-section">
+    <div class="logo">CRX</div>
+    <div class="brand-name">CRX Earning</div>
+  </div>
+  <div class="header-right">
+    <div class="wallet-badge">
+      💰 ₨<span id="headerWallet">0.00</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-header">
+  <h1>📹 Today's Tasks</h1>
+  <p>Watch videos and earn daily profit</p>
+</div>
+
+<div class="content">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total Videos</div>
+      <div class="stat-value" id="totalVideos">0</div>
+      <div class="stat-subtitle">Today's tasks</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Completed</div>
+      <div class="stat-value" id="completedVideos">0</div>
+      <div class="stat-subtitle">Videos watched</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Remaining</div>
+      <div class="stat-value" id="remainingVideos">0</div>
+      <div class="stat-subtitle">To complete</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Today's Profit</div>
+      <div class="stat-value" style="color: #28a745;">₨<span id="todayProfit">0</span></div>
+      <div class="stat-subtitle">Available</div>
+    </div>
+  </div>
+
+  <div id="infoBanner"></div>
+
+  <div id="videosSection"></div>
+
+  <div id="collectSection" class="collect-section" style="display: none;">
+    <h3>🎉 All Tasks Completed!</h3>
+    <p>You've watched all videos. Collect your profit now!</p>
+    <div class="profit-amount">₨<span id="profitAmount">0</span></div>
+    <button id="collectBtn" class="btn btn-success">
+      <span>🎁</span>
+      <span>Collect Profit</span>
+    </button>
+  </div>
+</div>
+
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>📺 Watch Video</h3>
+      <div class="modal-close" id="modalClose">×</div>
+    </div>
+    <div class="modal-body">
+      <div class="video-container">
+        <div id="player"></div>
+      </div>
+      <div class="progress-section">
+        <div class="progress-header">
+          <div class="timer-display" id="timerDisplay">0:00</div>
+          <div class="percent-display" id="percentDisplay">0%</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-info">
+          <span>Watch at least 95% to mark complete</span>
+          <span id="requiredText">Required: 95%</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="completeBtn" class="btn btn-primary disabled" style="width: 100%;" disabled>
+        <span>⏳</span>
+        <span>Keep Watching (95% Required)</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-item" onclick="window.location.href='dashboard.html'">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+    </svg>
+    <span>Home</span>
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='plan.html'">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+    </svg>
+    <span>Plans</span>
+  </div>
+
+  <div class="nav-item active">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+    </svg>
+    <span>Tasks</span>
+    <div class="nav-notification" id="navNotification" style="display: none;"></div>
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='withdraw.html'">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    </svg>
+    <span>Withdraw</span>
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='profile.html'">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+    </svg>
+    <span>Profile</span>
+  </div>
+</div>
+
+<script>
+const API_BASE = '/api/user/tasks';
+const token = sessionStorage.getItem('token');
+let tasks = [];
+let userTaskData = null;
+let currentVideo = null;
+let player = null;
+let trackingInterval = null;
+const requiredWatchPercentage = 95;
+let youtubeReady = false;
+
+function onYouTubeIframeAPIReady() { 
+  youtubeReady = true; 
+}
+
+if(!token) {
+  alert('⚠️ Please login first');
+  window.location.href = 'login.html';
+}
+
+async function loadTasks() {
+  try {
+    const res = await fetch(`${API_BASE}/today`, {
+      headers: {'Authorization': 'Bearer ' + token}
+    });
+    
+    if(!res.ok) {
+      if(res.status === 401) {
+        alert('⚠️ Session expired. Please login again.');
+        sessionStorage.removeItem('token');
+        window.location.href = 'login.html';
+        return;
+      }
+      throw new Error('Failed to load tasks');
+    }
+    
+    const data = await res.json();
+    tasks = data.videos || [];
+    userTaskData = data.userTask || {};
+    
+    updateStats();
+    renderTasks();
+    updateCollectSection();
+    updateNotificationBadge();
+    
+  } catch(e) {
+    console.error(e);
+    alert('❌ Error loading tasks. Please refresh the page.');
+  }
+}
+
+async function loadWallet() {
+  try {
+    const res = await fetch('/api/auth/dashboard', {
+      headers: {'Authorization': 'Bearer ' + token}
+    });
+    const data = await res.json();
+    if(data.wallet != null) {
+      document.getElementById('headerWallet').textContent = data.wallet.toFixed(2);
+    }
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+function updateStats() {
+  const total = tasks.length;
+  const completed = tasks.filter(v => v.watched).length;
+  const remaining = total - completed;
+  const profit = userTaskData?.completed && !userTaskData?.collected ? 
+    (userTaskData.dailyProfit || 0) : 0;
+  
+  document.getElementById('totalVideos').textContent = total;
+  document.getElementById('completedVideos').textContent = completed;
+  document.getElementById('remainingVideos').textContent = remaining;
+  document.getElementById('todayProfit').textContent = profit.toFixed(2);
+}
+
+function updateNotificationBadge() {
+  const hasNewTasks = tasks.length > 0 && tasks.some(v => !v.watched);
+  const notifBadge = document.getElementById('navNotification');
+  if(notifBadge) {
+    notifBadge.style.display = hasNewTasks ? 'block' : 'none';
+  }
+}
+
+function renderTasks() {
+  const section = document.getElementById('videosSection');
+  
+  if(tasks.length === 0) {
+    section.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <h3>No Tasks Available</h3>
+        <p>Purchase a plan from the Plans page to start earning</p>
+      </div>
+    `;
+    return;
+  }
+  
+  const completed = tasks.filter(v => v.watched).length;
+  const total = tasks.length;
+  
+  let bannerHtml = '';
+  if(completed === 0) {
+    bannerHtml = `
+      <div class="info-banner">
+        <div class="info-icon">ℹ️</div>
+        <div class="info-content">
+          <h3>How to Complete Tasks</h3>
+          <p>Click on any video below to watch. You need to watch at least 95% of each video to mark it complete. Complete all ${total} videos to collect your daily profit!</p>
+        </div>
+      </div>
+    `;
+  } else if(completed === total) {
+    bannerHtml = `
+      <div class="info-banner success">
+        <div class="info-icon">✅</div>
+        <div class="info-content">
+          <h3>All Tasks Completed!</h3>
+          <p>Great job! You've watched all videos. Scroll down to collect your profit.</p>
+        </div>
+      </div>
+    `;
+  } else {
+    bannerHtml = `
+      <div class="info-banner warning">
+        <div class="info-icon">⚡</div>
+        <div class="info-content">
+          <h3>Keep Going!</h3>
+          <p>You've completed ${completed} out of ${total} videos. Watch ${total - completed} more to unlock your profit.</p>
+        </div>
+      </div>
+    `;
+  }
+  
+  document.getElementById('infoBanner').innerHTML = bannerHtml;
+  
+  let videosHtml = `
+    <h2 class="section-title">
+      <span>🎬</span>
+      <span>Video Tasks</span>
+    </h2>
+    <div class="video-grid">
+  `;
+  
+  tasks.forEach((v, index) => {
+    const watched = v.watched;
+    videosHtml += `
+      <div class="video-card ${watched ? 'watched' : ''}" ${!watched ? `onclick="openVideo(${index})"` : ''}>
+        <div class="video-header">
+          <div class="video-number">📹 Video ${index + 1}</div>
+          <span class="status-badge ${watched ? 'watched' : 'pending'}">
+            ${watched ? '✓ Watched' : '⏳ Pending'}
+          </span>
+        </div>
+        <div class="video-info">
+          ${watched ? '✅ Successfully completed' : 'Click here to watch this video'}
+        </div>
+        <div class="video-action">
+          ${watched ? '✓ Completed' : '▶️ Watch Now'}
+        </div>
+      </div>
+    `;
+  });
+  
+  videosHtml += '</div>';
+  section.innerHTML = videosHtml;
+}
+
+function updateCollectSection() {
+  const collectSection = document.getElementById('collectSection');
+  const collectBtn = document.getElementById('collectBtn');
+  const profitAmountEl = document.getElementById('profitAmount');
+  
+  if(!userTaskData) {
+    collectSection.style.display = 'none';
+    return;
+  }
+  
+  const isCompleted = userTaskData.completed;
+  const isCollected = userTaskData.collected;
+  const profit = userTaskData.dailyProfit || 0;
+  
+  if(isCollected) {
+    collectSection.style.display = 'block';
+    collectSection.querySelector('h3').textContent = '✅ Profit Collected';
+    collectSection.querySelector('p').textContent = 'You have already collected today\'s profit. Come back tomorrow!';
+    profitAmountEl.textContent = profit.toFixed(2);
+    collectBtn.innerHTML = '<span>✓</span><span>Already Collected Today</span>';
+    collectBtn.classList.add('disabled');
+    collectBtn.disabled = true;
+    collectBtn.style.background = '#28a745';
+  } else if(isCompleted) {
+    collectSection.style.display = 'block';
+    collectSection.querySelector('h3').textContent = '🎉 All Tasks Completed!';
+    collectSection.querySelector('p').textContent = 'You\'ve watched all videos. Collect your profit now!';
+    profitAmountEl.textContent = profit.toFixed(2);
+    collectBtn.innerHTML = '<span>🎁</span><span>Collect Profit Now</span>';
+    collectBtn.classList.remove('disabled');
+    collectBtn.disabled = false;
+    collectBtn.style.background = '#007bff';
+  } else {
+    const completed = tasks.filter(v => v.watched).length;
+    const total = tasks.length;
+    collectSection.style.display = 'block';
+    collectSection.querySelector('h3').textContent = '⏳ Tasks In Progress';
+    collectSection.querySelector('p').textContent = `Complete all ${total} videos to unlock your profit`;
+    profitAmountEl.textContent = profit.toFixed(2);
+    collectBtn.innerHTML = `<span>🔒</span><span>Collect Profit (${completed}/${total})</span>`;
+    collectBtn.classList.add('disabled');
+    collectBtn.disabled = true;
+    collectBtn.style.background = '#6c757d';
+  }
+}
+
+function openVideo(index) {
+  if(!tasks[index]) return;
+  
+  currentVideo = tasks[index];
+  const modal = document.getElementById('videoModal');
+  modal.classList.add('active');
+  
+  document.getElementById('timerDisplay').textContent = '0:00';
+  document.getElementById('percentDisplay').textContent = '0%';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressFill').classList.remove('complete');
+  
+  const completeBtn = document.getElementById('completeBtn');
+  completeBtn.disabled = true;
+  completeBtn.classList.add('disabled');
+  completeBtn.innerHTML = '<span>⏳</span><span>Keep Watching (95% Required)</span>';
+  
+  if(!youtubeReady) {
+    setTimeout(() => openVideo(index), 200);
+    return;
+  }
+  
+  if(player) {
+    player.destroy();
+  }
+  
+  const videoId = extractYouTubeID(currentVideo.link);
+  if(!videoId) {
+    alert('❌ Invalid video link. Please contact support.');
+    closeVideoModal();
+    return;
+  }
+  
+  player = new YT.Player('player', {
+    height: '400',
+    width: '100%',
+    videoId: videoId,
+    playerVars: {
+      autoplay: 1,
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+      fs: 1
+    },
+    events: {
+      'onReady': startTracking,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function extractYouTubeID(url) {
+  try {
+    if(url.includes('youtu.be/')) return url.split('youtu.be/')[1].substring(0, 11);
+    if(url.includes('/shorts/')) return url.split('/shorts/')[1].substring(0, 11);
+    if(url.includes('/embed/')) return url.split('/embed/')[1].substring(0, 11);
+    if(url.includes('watch?v=')) return url.split('watch?v=')[1].substring(0, 11);
+    return url.length === 11 ? url : null;
+  } catch(e) {
+    console.error('Extract error:', e);
+    return null;
+  }
+}
+
+function onPlayerStateChange(event) {
+  if(event.data === YT.PlayerState.PLAYING && !trackingInterval) {
+    startTracking();
+  }
+}
+
+function startTracking() {
+  if(trackingInterval) clearInterval(trackingInterval);
+  
+  trackingInterval = setInterval(async () => {
+    if(!player || player.getPlayerState() !== YT.PlayerState.PLAYING) return;
+    
+    if(!currentVideo || !currentVideo.videoId) {
+      clearInterval(trackingInterval);
+      return;
+    }
+    
+    const currentTime = player.getCurrentTime();
+    const duration = player.getDuration();
+    
+    if(!duration || duration === 0) return;
+    
+    const progress = (currentTime / duration) * 100;
+    
+    const mins = Math.floor(currentTime / 60);
+    const secs = Math.floor(currentTime % 60);
+    document.getElementById('timerDisplay').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+    document.getElementById('percentDisplay').textContent = Math.floor(progress) + '%';
+    document.getElementById('progressFill').style.width = progress + '%';
+    
+    const completeBtn = document.getElementById('completeBtn');
+    
+    if(progress >= requiredWatchPercentage) {
+      document.getElementById('progressFill').classList.add('complete');
+      completeBtn.disabled = false;
+      completeBtn.classList.remove('disabled');
+      completeBtn.innerHTML = '<span>✅</span><span>Mark as Complete</span>';
+    }
+    
+    if(progress >= 85 && currentVideo && !currentVideo.watched) {
+      clearInterval(trackingInterval);
+      trackingInterval = null;
+      await completeVideo();
+    }
+  }, 500);
+}
+
+async function completeVideo() {
+  if(!currentVideo || !currentVideo.videoId) {
+    console.error('No current video');
+    return;
+  }
+  
+  const videoIdToMark = currentVideo.videoId;
+  
+  if(currentVideo.watched) {
+    console.log('Already marked');
+    closeVideoModal();
+    return;
+  }
+  
+  const btn = document.getElementById('completeBtn');
+  btn.disabled = true;
+  btn.classList.add('disabled');
+  btn.innerHTML = '<span>⏳</span><span>Marking Complete...</span>';
+  
+  try {
+    const res = await fetch(`${API_BASE}/mark`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({ videoId: videoIdToMark })
+    });
+    
+    if(!res.ok) throw new Error('Failed to mark');
+    
+    const data = await res.json();
+    
+    if(data.success) {
+      closeVideoModal();
+      await loadTasks();
+    } else {
+      alert('❌ ' + (data.message || 'Error marking video'));
+      btn.disabled = false;
+      btn.classList.remove('disabled');
+      btn.innerHTML = '<span>✅</span><span>Mark as Complete</span>';
+    }
+  } catch(e) {
+    console.error(e);
+    alert('❌ Error marking video. Please try again.');
+    btn.disabled = false;
+    btn.classList.remove('disabled');
+    btn.innerHTML = '<span>✅</span><span>Mark as Complete</span>';
+  }
+}
+
+function closeVideoModal() {
+  const modal = document.getElementById('videoModal');
+  modal.classList.remove('active');
+  
+  if(trackingInterval) {
+    clearInterval(trackingInterval);
+    trackingInterval = null;
+  }
+  
+  if(player) {
+    player.destroy();
+    player = null;
+  }
+  
+  currentVideo = null;
+}
+
+document.getElementById('modalClose').addEventListener('click', closeVideoModal);
+
+document.getElementById('completeBtn').addEventListener('click', completeVideo);
+
+document.getElementById('collectBtn').addEventListener('click', async () => {
+  const collectBtn = document.getElementById('collectBtn');
+  
+  if(collectBtn.classList.contains('disabled')) {
+    return;
+  }
+  
+  if(!confirm('🎁 Collect today\'s profit?')) return;
+  
+  collectBtn.classList.add('disabled');
+  collectBtn.disabled = true;
+  const originalHTML = collectBtn.innerHTML;
+  collectBtn.innerHTML = '<span>⏳</span><span>Processing...</span>';
+  
+  try {
+    const res = await fetch(`${API_BASE}/collect`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({})
+    });
+    
+    if(!res.ok) throw new Error('Failed to collect');
+    
+    const data = await res.json();
+    
+    if(data.success) {
+      alert(`✅ Collected: ₨${data.added}\n\nCheck your wallet!`);
+      
+      collectBtn.innerHTML = '<span>✓</span><span>Already Collected</span>';
+      collectBtn.style.background = '#6c757d';
+      
+      await loadTasks();
+      await loadWallet();
+    } else {
+      alert('❌ ' + (data.message || 'Error collecting profit'));
+      collectBtn.classList.remove('disabled');
+      collectBtn.disabled = false;
+      collectBtn.innerHTML = originalHTML;
+    }
+  } catch(e) {
+    console.error(e);
+    alert('❌ Error collecting profit. Please try again.');
+    collectBtn.classList.remove('disabled');
+    collectBtn.disabled = false;
+    collectBtn.innerHTML = originalHTML;
+  }
+});
+
+window.addEventListener('click', (e) => {
+  const modal = document.getElementById('videoModal');
+  if(e.target === modal) {
+    closeVideoModal();
+  }
+});
+
+loadTasks();
+loadWallet();
+
+setInterval(() => {
+  loadWallet();
+}, 15000);
+</script>
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRX - Register</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: #0a0a0a;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bg-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 0;
+}
+
+.glow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float 20s infinite alternate;
+  z-index: 0;
+}
+
+.glow:nth-child(2) {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  top: 60%;
+  left: 70%;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(100px, 100px); }
+}
+
+.container {
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  padding: 48px 40px;
+  position: relative;
+  z-index: 10;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: rgba(30, 30, 30, 0.3);
+  border-radius: 3px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 3px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.brand {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.tagline {
+  color: #888;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+h2 {
+  color: #fff;
+  margin-bottom: 28px;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  color: #aaa;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.input-group select {
+  cursor: pointer;
+}
+
+.input-group select option {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #6366f1;
+  background: rgba(30, 30, 30, 0.8);
+}
+
+.input-group input::placeholder {
+  color: #555;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.optional {
+  color: #666;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+  letter-spacing: 0.3px;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#msg {
+  color: #ef4444;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 16px;
+  padding: 10px;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  display: none;
+}
+
+#msg.show {
+  display: block;
+}
+
+#msg.success {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 28px 0 20px;
+  color: #555;
+  font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.divider span {
+  padding: 0 16px;
+}
+
+.login-link {
+  text-align: center;
+  color: #888;
+  font-size: 13px;
+}
+
+.login-link a {
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.login-link a:hover {
+  color: #8b5cf6;
+}
+
+.support-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+  transition: all 0.2s;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.support-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+}
+
+.support-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px);
+}
+
+.support-modal.active {
+  display: flex;
+}
+
+.support-content {
+  background: rgba(18, 18, 18, 0.95);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 450px;
+  width: 90%;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: #fff;
+}
+
+.support-content h3 {
+  color: #fff;
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.support-content p {
+  color: #888;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.support-option {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 10px;
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.support-option:hover {
+  background: rgba(40, 40, 40, 0.8);
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateX(4px);
+}
+
+.support-option span {
+  font-size: 22px;
+  margin-right: 16px;
+}
+
+.support-option strong {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.support-option small {
+  color: #888;
+  font-size: 12px;
+}
+
+.password-strength {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.strength-bar {
+  height: 3px;
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  background: #ef4444;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+
+.strength-text {
+  color: #888;
+  margin-top: 4px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 36px 24px;
+    max-height: 85vh;
+  }
+  
+  .logo {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+  
+  .brand {
+    font-size: 20px;
+  }
+  
+  h2 {
+    font-size: 18px;
+  }
+  
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .support-btn {
+    width: 48px;
+    height: 48px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 20px;
+  }
+  
+  .support-content {
+    padding: 24px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow" style="top: 20%; left: 10%;"></div>
+<div class="glow"></div>
+
+<div class="container">
+  <div class="logo-section">
+    <div class="logo">CRX</div>
+    <div class="brand">CRX System</div>
+    <div class="tagline">Create Your Account</div>
+  </div>
+  
+  <h2>Get Started</h2>
+  
+  <form id="registerForm">
+    <div class="input-group">
+      <label>Full Name</label>
+      <input type="text" name="name" placeholder="Enter your full name" required>
+    </div>
+    
+    <div class="input-row">
+      <div class="input-group">
+        <label>Username <span class="optional">(Optional)</span></label>
+        <input type="text" name="username" placeholder="Choose username">
+      </div>
+      
+      <div class="input-group">
+        <label>Phone <span class="optional">(Optional)</span></label>
+        <input type="text" name="phone" placeholder="Your phone">
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label>Email Address</label>
+      <input type="email" name="email" placeholder="your@email.com" required>
+    </div>
+    
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" name="password" id="password" placeholder="Create a strong password" required>
+      <div class="password-strength">
+        <div class="strength-bar">
+          <div class="strength-fill" id="strengthFill"></div>
+        </div>
+        <div class="strength-text" id="strengthText"></div>
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label>Confirm Password</label>
+      <input type="password" name="confirmPassword" placeholder="Re-enter your password" required>
+    </div>
+    
+    <div class="input-group">
+      <label>Security Question</label>
+      <select name="securityQuestion" required>
+        <option value="">Select a security question</option>
+        <option value="Your first pet?">Your first pet?</option>
+        <option value="Your birth city?">Your birth city?</option>
+        <option value="Mother's maiden name?">Mother's maiden name?</option>
+        <option value="Favorite teacher?">Favorite teacher?</option>
+        <option value="First car model?">First car model?</option>
+      </select>
+    </div>
+    
+    <div class="input-group">
+      <label>Security Answer</label>
+      <input type="text" name="securityAnswer" placeholder="Your answer" required>
+    </div>
+    
+    <div class="input-group">
+      <label>Referral Code <span class="optional">(Optional)</span></label>
+      <input type="text" name="referralCode" placeholder="Enter referral code">
+    </div>
+    
+    <button type="submit">Create Account</button>
+    
+    <p id="msg"></p>
+    
+    <div class="divider">
+      <span>Already have an account?</span>
+    </div>
+    
+    <div class="login-link">
+      <a href="login.html">Sign in →</a>
+    </div>
+  </form>
+</div>
+
+<div class="support-btn" onclick="toggleSupport()">💬</div>
+
+<div class="support-modal" id="supportModal">
+  <div class="support-content">
+    <span class="close-btn" onclick="toggleSupport()">&times;</span>
+    <h3>Need Help?</h3>
+    <p>Our support team is available 24/7</p>
+    
+    <div class="support-options">
+      <div class="support-option" onclick="alert('Live Chat - Coming Soon!')">
+        <span>💬</span>
+        <div>
+          <strong>Live Chat</strong>
+          <small>Instant support</small>
+        </div>
+      </div>
+      
+      <div class="support-option" onclick="alert('Email: support@crxsystem.com')">
+        <span>📧</span>
+        <div>
+          <strong>Email Support</strong>
+          <small>support@crxsystem.com</small>
+        </div>
+      </div>
+      
+      <div class="support-option" onclick="alert('Help Center - Coming Soon!')">
+        <span>📚</span>
+        <div>
+          <strong>Help Center</strong>
+          <small>FAQs & Guides</small>
+        </div>
+      </div>
+      
+      <div class="support-option" onclick="alert('Phone: +92-XXX-XXXXXXX')">
+        <span>📞</span>
+        <div>
+          <strong>Phone Support</strong>
+          <small>+92-XXX-XXXXXXX</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleSupport() {
+  document.getElementById('supportModal').classList.toggle('active');
+}
+
+document.getElementById('supportModal').addEventListener('click', function(e) {
+  if (e.target === this) toggleSupport();
+});
+
+// Password strength checker
+const passwordInput = document.getElementById('password');
+const strengthFill = document.getElementById('strengthFill');
+const strengthText = document.getElementById('strengthText');
+
+passwordInput.addEventListener('input', function() {
+  const password = this.value;
+  let strength = 0;
+  
+  if (password.length >= 8) strength++;
+  if (password.length >= 12) strength++;
+  if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^a-zA-Z0-9]/.test(password)) strength++;
+  
+  const percentage = (strength / 5) * 100;
+  strengthFill.style.width = percentage + '%';
+  
+  if (strength === 0) {
+    strengthFill.style.background = '#ef4444';
+    strengthText.textContent = '';
+  } else if (strength <= 2) {
+    strengthFill.style.background = '#ef4444';
+    strengthText.textContent = 'Weak password';
+    strengthText.style.color = '#ef4444';
+  } else if (strength <= 3) {
+    strengthFill.style.background = '#f59e0b';
+    strengthText.textContent = 'Medium strength';
+    strengthText.style.color = '#f59e0b';
+  } else {
+    strengthFill.style.background = '#10b981';
+    strengthText.textContent = 'Strong password';
+    strengthText.style.color = '#10b981';
+  }
+});
+
+// Form submission
+document.getElementById('registerForm').addEventListener('submit', async(e) => {
+  e.preventDefault();
+  const formData = Object.fromEntries(new FormData(e.target));
+  const msgEl = document.getElementById('msg');
+  const btn = e.target.querySelector('button');
+  const originalText = btn.textContent;
+  
+  // Validate passwords match
+  if (formData.password !== formData.confirmPassword) {
+    msgEl.textContent = '✗ Passwords do not match';
+    msgEl.classList.add('show');
+    msgEl.classList.remove('success');
+    return;
+  }
+  
+  btn.textContent = 'Creating Account...';
+  btn.disabled = true;
+  msgEl.classList.remove('show', 'success');
+  
+  try {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(formData)
+    });
+    const result = await res.json();
+    
+    if(result.token) {
+      sessionStorage.setItem('token', result.token);
+      msgEl.textContent = '✓ Account created! Redirecting...';
+      msgEl.classList.add('show', 'success');
+      setTimeout(() => window.location.href = 'dashboard.html', 1000);
+    } else {
+      const errorMsg = result.message || (result.errors && result.errors[0].msg) || '✗ Registration failed';
+      msgEl.textContent = errorMsg;
+      msgEl.classList.add('show');
+      msgEl.classList.remove('success');
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+  } catch(err) {
+    msgEl.textContent = '✗ Server error. Please try again.';
+    msgEl.classList.add('show');
+    msgEl.classList.remove('success');
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

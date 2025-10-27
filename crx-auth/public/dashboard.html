@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRX Earning</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8f9fa;
+  color: #1a1a1a;
+  padding-bottom: 70px;
+  overflow-x: hidden;
+}
+
+.header {
+  background: #fff;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.bell-icon {
+  width: 40px;
+  height: 40px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.bell-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: #4a5568;
+}
+
+.notification-popup {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 20px;
+  right: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  padding: 20px;
+  z-index: 200;
+  animation: slideDown 0.3s ease;
+}
+
+.notification-popup.active {
+  display: block;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notification-popup h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+
+.notification-popup p {
+  font-size: 14px;
+  color: #718096;
+}
+
+.welcome-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 24px 20px;
+  color: #fff;
+}
+
+.welcome-section h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.welcome-section p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.content {
+  padding: 20px;
+}
+
+.news-ticker {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.news-ticker h3 {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.news-scroll {
+  height: 100px;
+  overflow: hidden;
+}
+
+.news-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f3f5;
+  animation: scrollUp 15s linear infinite;
+}
+
+.news-avatar {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.news-text {
+  font-size: 12px;
+  color: #4a5568;
+}
+
+.news-amount {
+  margin-left: auto;
+  font-weight: 700;
+  color: #10b981;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+@keyframes scrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+
+.cards-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 13px;
+  color: #718096;
+  font-weight: 500;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background: #d4f4dd;
+  color: #22543d;
+}
+
+.status-badge.inactive {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.card-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.card-subtitle {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.ref-code {
+  font-size: 11px;
+  color: #667eea;
+  font-weight: 600;
+  background: #eef2ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.plan-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.plan-card:active {
+  transform: scale(0.98);
+}
+
+.plan-card img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+}
+
+.plan-card h4 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.plan-investment {
+  font-size: 20px;
+  font-weight: 700;
+  color: #667eea;
+  margin: 8px 0;
+}
+
+.plan-detail {
+  font-size: 11px;
+  color: #718096;
+  margin: 4px 0;
+}
+
+.certifications {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cert-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+}
+
+.cert-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.cert-card h4 {
+  font-size: 11px;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.cert-card p {
+  font-size: 10px;
+  color: #718096;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: #a0aec0;
+  transition: color 0.2s;
+  padding: 4px 12px;
+}
+
+.nav-item.active {
+  color: #667eea;
+}
+
+.nav-item svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+}
+
+.nav-item span {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.desktop-sidebar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .main-wrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    width: 100%;
+  }
+
+  .welcome-section {
+    padding: 32px 40px;
+  }
+
+  .welcome-section h1 {
+    font-size: 32px;
+  }
+
+  .welcome-section p {
+    font-size: 16px;
+  }
+
+  .cards-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  .card-value {
+    font-size: 28px;
+  }
+
+  .news-ticker {
+    padding: 24px;
+    margin-bottom: 30px;
+  }
+
+  .news-ticker h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .news-scroll {
+    height: 120px;
+  }
+
+  .plans-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .plan-card {
+    padding: 24px;
+  }
+
+  .plan-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  }
+
+  .plan-card img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .plan-card h4 {
+    font-size: 16px;
+  }
+
+  .plan-investment {
+    font-size: 24px;
+  }
+
+  .certifications {
+    gap: 24px;
+  }
+
+  .cert-card {
+    padding: 24px;
+  }
+
+  .bottom-nav {
+    display: none;
+  }
+
+  .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+    padding: 20px 0;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .sidebar-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #a0aec0;
+    transition: all 0.2s;
+    padding: 12px;
+    border-radius: 12px;
+    width: 60px;
+  }
+
+  .sidebar-icon:hover,
+  .sidebar-icon.active {
+    color: #667eea;
+    background: #f7fafc;
+  }
+
+  .sidebar-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+  }
+
+  .sidebar-icon span {
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .sidebar-bottom {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-section">
+    <div class="logo">CRX</div>
+    <div class="brand-name">CRX Earning</div>
+  </div>
+  <div class="bell-icon" onclick="toggleNotification()">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+    </svg>
+  </div>
+</div>
+
+<div class="notification-popup" id="notificationPopup">
+  <h3>Notifications</h3>
+  <p id="notificationMessage">Buy a plan to start earning money!</p>
+</div>
+
+<div class="main-wrapper">
+  <div style="flex: 1; overflow-y: auto;">
+    <div class="welcome-section">
+      <h1>Welcome, <span id="userName">User</span></h1>
+      <p>Track your earnings and grow your wealth</p>
+    </div>
+
+    <div class="content">
+      <div class="news-ticker">
+        <h3>Recent Withdrawals</h3>
+        <div class="news-scroll" id="newsScroll"></div>
+      </div>
+
+      <div class="cards-row">
+        <div class="card" onclick="window.location.href='plan.html'">
+          <div class="card-header">
+            <div class="card-title">Active Plan</div>
+            <span class="status-badge inactive" id="planStatus">Inactive</span>
+          </div>
+          <div class="card-value" id="planName">No Plan</div>
+          <div class="card-subtitle" id="planExpiry">Buy a plan to start earning</div>
+        </div>
+
+        <div class="card" onclick="window.location.href='referral.html'">
+          <div class="card-header">
+            <div class="card-title">Referrals</div>
+          </div>
+          <div class="card-value" id="referralCount">0</div>
+          <div class="card-info">
+            <div class="card-subtitle">Your Code</div>
+            <div class="ref-code" id="referralCode">-</div>
+          </div>
+        </div>
+
+        <div class="card" onclick="window.location.href='withdraw.html'">
+          <div class="card-header">
+            <div class="card-title">Wallet</div>
+          </div>
+          <div class="card-value">$<span id="walletBalance">0.00</span></div>
+          <div class="card-subtitle">Available balance</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Popular Plans</h2>
+      <div class="plans-grid" id="plansGrid"></div>
+
+      <h2 class="section-title">Trust & Security</h2>
+      <div class="certifications">
+        <div class="cert-card">
+          <div class="cert-icon">🔒</div>
+          <h4>SSL Secured</h4>
+          <p>256-bit encryption</p>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">⭐</div>
+          <h4>Verified</h4>
+          <p>Trusted platform</p>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">⚡</div>
+          <h4>Fast Payout</h4>
+          <p>24/7 support</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="desktop-sidebar">
+    <div class="sidebar-icon active">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+      </svg>
+      <span>Home</span>
+    </div>
+
+    <div class="sidebar-icon" onclick="window.location.href='plan.html'">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+      </svg>
+      <span>Plans</span>
+    </div>
+
+    <div class="sidebar-icon" onclick="window.location.href='task.html'">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+      </svg>
+      <span>Tasks</span>
+    </div>
+
+    <div class="sidebar-icon" onclick="window.location.href='withdraw.html'">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+      </svg>
+      <span>Withdraw</span>
+    </div>
+
+    <div class="sidebar-icon" onclick="window.location.href='profile.html'">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+      </svg>
+      <span>Profile</span>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-icon" onclick="window.location.href='referral.html'">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <span>Referral</span>
+      </div>
+
+      <div class="sidebar-icon" onclick="window.location.href='support.html'">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <span>Support</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-item active">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+    </svg>
+    <span>Home</span>
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='plan.html'">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+    </svg>
+    <span>Plans</span>
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='task.html'">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+    </svg>
+    <span>Tasks</span>
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='withdraw.html'">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    </svg>
+    <span>Withdraw</span>
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='profile.html'">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+    </svg>
+    <span>Profile</span>
+  </div>
+</div>
+
+<script>
+const plans = [
+  { name:"Bitcoin", image:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23F7931A'/%3E%3Cpath fill='%23FFF' d='M23.189 14.02c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.114-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.746-.17-1.104-.26l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z'/%3E%3C/g%3E%3C/svg%3E", totalInvestment:20, dailyAds:4, dailyProfit:2, totalProfit:180, durationDays:60 },
+  { name:"Ethereum", image:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23627EEA'/%3E%3Cg fill='%23FFF'%3E%3Cpath fill-opacity='.602' d='M16.498 4v8.87l7.497 3.35z'/%3E%3Cpath d='M16.498 4L9 16.22l7.498-3.35z'/%3E%3Cpath fill-opacity='.602' d='M16.498 21.968v6.027L24 17.616z'/%3E%3Cpath d='M16.498 27.995v-6.028L9 17.616z'/%3E%3Cpath fill-opacity='.2' d='M16.498 20.573l7.497-4.353-7.497-3.348z'/%3E%3Cpath fill-opacity='.602' d='M9 16.22l7.498 4.353v-7.701z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E", totalInvestment:50, dailyAds:10, dailyProfit:8, totalProfit:480, durationDays:60 },
+  { name:"Tether", image:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none'%3E%3Ccircle cx='16' cy='16' r='16' fill='%2326A17B'/%3E%3Cpath fill='%23FFF' d='M17.922 17.383v-.002c-.11.008-.677.042-1.942.042-1.01 0-1.721-.03-1.971-.042v.003c-3.888-.171-6.79-.848-6.79-1.658 0-.809 2.902-1.486 6.79-1.66v2.644c.254.018.982.061 1.988.061 1.207 0 1.812-.05 1.925-.06v-2.643c3.88.173 6.775.85 6.775 1.658 0 .81-2.895 1.485-6.775 1.657m0-3.59v-2.366h5.414V7.819H8.595v3.608h5.414v2.365c-4.4.202-7.709 1.074-7.709 2.118 0 1.044 3.309 1.915 7.709 2.118v7.582h3.913v-7.584c4.393-.202 7.694-1.073 7.694-2.116 0-1.043-3.301-1.914-7.694-2.117'/%3E%3C/g%3E%3C/svg%3E", totalInvestment:100, dailyAds:20, dailyProfit:16, totalProfit:960, durationDays:60 },
+  { name:"BNB", image:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23F3BA2F'/%3E%3Cpath fill='%23FFF' d='M12.116 14.404L16 10.52l3.886 3.886 2.26-2.26L16 6l-6.144 6.144 2.26 2.26zM6 16l2.26-2.26L10.52 16l-2.26 2.26L6 16zm6.116 1.596L16 21.48l3.886-3.886 2.26 2.259L16 26l-6.144-6.144-.003-.003 2.263-2.257zM21.48 16l2.26-2.26L26 16l-2.26 2.26L21.48 16zm-3.188-.002h.002V16L16 18.294l-2.291-2.29-.004-.004.004-.003.401-.402.195-.195L16 13.706l2.293 2.293z'/%3E%3C/g%3E%3C/svg%3E", totalInvestment:200, dailyAds:40, dailyProfit:32, totalProfit:1920, durationDays:60 }
+];
+
+const withdrawals = [
+  { user: "john***23", email: "jo***@gmail.com", amount: 450 },
+  { user: "sarah***89", email: "sa***@gmail.com", amount: 120 },
+  { user: "mike***45", email: "mi***@gmail.com", amount: 280 },
+  { user: "emma***12", email: "em***@gmail.com", amount: 350 },
+  { user: "alex***67", email: "al***@gmail.com", amount: 190 },
+  { user: "david***34", email: "da***@gmail.com", amount: 520 },
+  { user: "lisa***78", email: "li***@gmail.com", amount: 240 },
+  { user: "mark***56", email: "ma***@gmail.com", amount: 380 }
+];
+
+function toggleNotification() {
+  const popup = document.getElementById('notificationPopup');
+  popup.classList.toggle('active');
+}
+
+function renderPlans() {
+  const grid = document.getElementById('plansGrid');
+  plans.forEach(plan => {
+    grid.innerHTML += `
+      <div class="plan-card" onclick="window.location.href='plan.html'">
+        <img src="${plan.image}" alt="${plan.name}">
+        <h4>${plan.name}</h4>
+        <div class="plan-investment">${plan.totalInvestment}</div>
+        <div class="plan-detail">Daily: ${plan.dailyProfit}</div>
+        <div class="plan-detail">Total: ${plan.totalProfit}</div>
+      </div>
+    `;
+  });
+}
+
+function renderWithdrawals() {
+  const scroll = document.getElementById('newsScroll');
+  let html = '';
+  for(let i = 0; i < 20; i++) {
+    const w = withdrawals[i % withdrawals.length];
+    html += `
+      <div class="news-item">
+        <div class="news-avatar">${w.user.charAt(0).toUpperCase()}</div>
+        <div class="news-text">${w.email} withdrew</div>
+        <div class="news-amount">${w.amount}</div>
+      </div>
+    `;
+  }
+  scroll.innerHTML = html;
+}
+
+
+async function loadDashboard() {
+  const token = sessionStorage.getItem('token');
+  if(!token) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/auth/dashboard', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const result = await res.json();
+
+    if(result.name) {
+      document.getElementById('userName').innerText = result.name;
+      document.getElementById('referralCode').innerText = result.referralCode;
+      document.getElementById('referralCount').innerText = result.referralCount;
+      document.getElementById('walletBalance').innerText = (result.wallet || 0).toFixed(2);
+
+      if(result.activePlan) {
+        const startDate = new Date(result.planStartDate || Date.now());
+        const expiryDate = new Date(startDate);
+        expiryDate.setDate(expiryDate.getDate() + result.activePlan.durationDays);
+        
+        document.getElementById('planName').innerText = result.activePlan.name;
+        document.getElementById('planExpiry').innerText = 'Expires: ' + expiryDate.toLocaleDateString();
+        document.getElementById('planStatus').innerText = 'Active';
+        document.getElementById('planStatus').className = 'status-badge active';
+        document.getElementById('notificationMessage').innerText = `Your ${result.activePlan.name} plan is active!`;
+      }
+    } else {
+      sessionStorage.removeItem('token');
+      window.location.href = 'login.html';
+    }
+  } catch(err) {
+    console.error(err);
+    sessionStorage.removeItem('token');
+    window.location.href = 'login.html';
+  }
+}
+
+document.addEventListener('click', function(e) {
+  const popup = document.getElementById('notificationPopup');
+  const bell = document.querySelector('.bell-icon');
+  if(bell && !bell.contains(e.target) && !popup.contains(e.target)) {
+    popup.classList.remove('active');
+  }
+});
+
+setInterval(async () => {
+  const token = sessionStorage.getItem('token');
+  if(!token) return;
+  try {
+    const res = await fetch('/api/auth/dashboard', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const result = await res.json();
+    if(result.wallet != null) {
+      document.getElementById('walletBalance').innerText = result.wallet.toFixed(2);
+    }
+  } catch(e) { console.error(e); }
+}, 10000);
+
+
+renderPlans();
+renderWithdrawals();
+loadDashboard();
+</script>
+</body>
+</html>
