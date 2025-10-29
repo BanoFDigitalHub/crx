@@ -27,6 +27,7 @@ app.use('/api/plan-requests', require('./routes/planRequests'));
 app.use('/api/withdraw', require('./routes/withdraw'));
 const userTasksRoutes = require('./routes/userTasks');
 app.use('/api/user/tasks', userTasksRoutes);
+app.use('/images', express.static('images'));
 
 app.use('/api/profile', require('./routes/profile'));
 app.use('/api/referral', require('./routes/referral'));
