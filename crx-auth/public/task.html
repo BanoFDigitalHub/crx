@@ -1312,7 +1312,6 @@ body {
 <div class="toast" id="toast">
   <span id="toastMessage"></span>
 </div>
-
 <script>
 const API_BASE = '/api/user/tasks';
 const token = sessionStorage.getItem('token');
@@ -1390,12 +1389,36 @@ async function loadTasks() {
         }, 2000);
         return;
       }
+      
+      // Handle 404 - No active plan
+      if (res.status === 404) {
+        document.getElementById('loadingSkeleton').classList.add('hidden');
+        document.getElementById('mainContent').classList.remove('hidden');
+        
+        // Show empty state with no plan message
+        tasks = [];
+        userTaskData = { hasActivePlan: false };
+        
+        renderStats();
+        renderAlertBanner();
+        renderTasks();
+        renderCollectSection();
+        return;
+      }
+      
       throw new Error('Failed to load tasks');
     }
     
     const data = await res.json();
+    
+    // Agar response me videos array hai aur empty hai, matlab plan active hai but videos nahi
     tasks = data.videos || [];
     userTaskData = data.userTask || {};
+    
+    // Agar 200 response aaya hai, matlab plan active hai
+    if (!userTaskData.hasActivePlan) {
+      userTaskData.hasActivePlan = true;
+    }
     
     // Hide skeleton, show content
     document.getElementById('loadingSkeleton').classList.add('hidden');
@@ -1440,39 +1463,31 @@ function renderStats() {
   const statsGrid = document.getElementById('statsGrid');
   statsGrid.innerHTML = `
     <div class="stat-card">
-      <div class="stat-header">
-        <div class="stat-icon primary">📹</div>
-        <div class="stat-info">
-          <h3>Total Videos</h3>
-          <div class="stat-value">${total}</div>
-        </div>
+      <div class="stat-icon primary">📹</div>
+      <div class="stat-info">
+        <h3>Total Videos</h3>
+        <div class="stat-value">${total}</div>
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-header">
-        <div class="stat-icon success">✅</div>
-        <div class="stat-info">
-          <h3>Completed</h3>
-          <div class="stat-value success">${completed}</div>
-        </div>
+      <div class="stat-icon success">✅</div>
+      <div class="stat-info">
+        <h3>Completed</h3>
+        <div class="stat-value success">${completed}</div>
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-header">
-        <div class="stat-icon warning">⏳</div>
-        <div class="stat-info">
-          <h3>Remaining</h3>
-          <div class="stat-value">${remaining}</div>
-        </div>
+      <div class="stat-icon warning">⏳</div>
+      <div class="stat-info">
+        <h3>Remaining</h3>
+        <div class="stat-value">${remaining}</div>
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-header">
-        <div class="stat-icon success">💰</div>
-        <div class="stat-info">
-          <h3>Today's Profit</h3>
-          <div class="stat-value success">${profit.toFixed(2)}</div>
-        </div>
+      <div class="stat-icon success">💰</div>
+      <div class="stat-info">
+        <h3>Today's Profit</h3>
+        <div class="stat-value success">${profit.toFixed(2)}</div>
       </div>
     </div>
   `;
@@ -1480,14 +1495,42 @@ function renderStats() {
 
 // Render Alert Banner
 function renderAlertBanner() {
-  const completed = tasks.filter(v => v.watched).length;
-  const total = tasks.length;
   const alertBanner = document.getElementById('alertBanner');
   
-  if (total === 0) {
-    alertBanner.innerHTML = '';
+  // Check if user has active plan
+  const hasActivePlan = userTaskData?.hasActivePlan !== false;
+  
+  // Scenario 1: No active plan
+  if (!hasActivePlan) {
+    alertBanner.innerHTML = `
+      <div class="alert-banner warning">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-content">
+          <h3>No Active Plan</h3>
+          <p>You need to purchase a plan first to access daily tasks and start earning. Visit the Plans page to choose your perfect plan!</p>
+        </div>
+      </div>
+    `;
     return;
   }
+  
+  // Scenario 2: Plan active but no videos yet
+  if (tasks.length === 0) {
+    alertBanner.innerHTML = `
+      <div class="alert-banner info">
+        <div class="alert-icon">⏳</div>
+        <div class="alert-content">
+          <h3>Tasks Coming Soon</h3>
+          <p>Your plan is active! Admin will upload video tasks soon. Please check back later to start watching and earning.</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  // Scenario 3: Plan active with videos
+  const completed = tasks.filter(v => v.watched).length;
+  const total = tasks.length;
   
   if (completed === 0) {
     alertBanner.innerHTML = `
@@ -1526,21 +1569,42 @@ function renderAlertBanner() {
 function renderTasks() {
   const videosSection = document.getElementById('videosSection');
   
-  if (tasks.length === 0) {
+  // Check if user has active plan
+  const hasActivePlan = userTaskData?.hasActivePlan !== false;
+  
+  // Scenario 1: No active plan at all
+  if (!hasActivePlan) {
     videosSection.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">📭</div>
-        <h3>No Tasks Available</h3>
-        <p>You don't have any active plan. Purchase a plan from the Plans page to start earning daily profit!</p>
+        <h3>No Active Plan</h3>
+        <p>You don't have any active plan yet. Purchase a plan to start earning daily profit by watching videos!</p>
         <button class="btn" onclick="window.location.href='plan.html'">
           <span>🎯</span>
-          <span>View Plans</span>
+          <span>View Plans & Start Earning</span>
         </button>
       </div>
     `;
     return;
   }
   
+  // Scenario 2: Has active plan but admin hasn't uploaded videos yet
+  if (tasks.length === 0) {
+    videosSection.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⏳</div>
+        <h3>Admin Will Upload Tasks Soon</h3>
+        <p>Your plan is active and ready! The admin will upload video tasks shortly. Please check back in a few hours to start watching and earning your daily profit.</p>
+        <button class="btn" onclick="window.location.reload()">
+          <span>🔄</span>
+          <span>Refresh Page</span>
+        </button>
+      </div>
+    `;
+    return;
+  }
+  
+  // Scenario 3: Has active plan with videos - Show tasks normally
   let videosHtml = `
     <div class="section-header">
       <div>
@@ -1599,7 +1663,7 @@ function renderCollectSection() {
         <div class="collect-icon">✅</div>
         <h3>Profit Collected</h3>
         <p>You have already collected today's profit</p>
-        <div class="profit-amount">${profit.toFixed(2)}</div>
+        <div class="profit-amount">$${profit.toFixed(2)}</div>
         <button class="btn btn-primary disabled" disabled>
           <span>✓</span>
           <span>Already Collected</span>
@@ -1612,7 +1676,7 @@ function renderCollectSection() {
         <div class="collect-icon">🎁</div>
         <h3>All Tasks Completed!</h3>
         <p>Congratulations! Collect your daily profit now</p>
-        <div class="profit-amount">${profit.toFixed(2)}</div>
+        <div class="profit-amount">$${profit.toFixed(2)}</div>
         <button class="btn btn-primary" onclick="collectProfit()">
           <span>🎁</span>
           <span>Collect Profit Now</span>
@@ -1625,7 +1689,7 @@ function renderCollectSection() {
         <div class="collect-icon">🔒</div>
         <h3>Tasks In Progress</h3>
         <p>Complete all ${total} videos to unlock your daily profit</p>
-        <div class="profit-amount">${profit.toFixed(2)}</div>
+        <div class="profit-amount">$${profit.toFixed(2)}</div>
         <button class="btn btn-primary disabled" disabled>
           <span>🔒</span>
           <span>Locked (${completed}/${total} Videos)</span>
@@ -1838,7 +1902,7 @@ async function collectProfit() {
 
     const data = await res.json();
     if (data.success) {
-      showToast(`✅ Collected: ${data.added}`, 'success');
+      showToast(`✅ Collected: $${data.added}`, 'success');
       await loadTasks();
       await loadWallet();
     } else {
@@ -1869,6 +1933,7 @@ document.getElementById('completeBtn').addEventListener('click', completeVideo);
 loadTasks();
 loadWallet();
 setInterval(loadWallet, 15000);
+
 // Smooth scroll utility
 function smoothScrollTo(elementId) {
   const element = document.getElementById(elementId);
@@ -1881,11 +1946,9 @@ function smoothScrollTo(elementId) {
 function addStatsClickEvents() {
   const statCards = document.querySelectorAll('.stat-card');
   if (statCards.length >= 4) {
-    // 1st 3 -> videos section
     statCards[0].addEventListener('click', () => smoothScrollTo('videosSection'));
     statCards[1].addEventListener('click', () => smoothScrollTo('videosSection'));
     statCards[2].addEventListener('click', () => smoothScrollTo('videosSection'));
-    // 4th -> collect section
     statCards[3].addEventListener('click', () => smoothScrollTo('collectSection'));
   }
 }
@@ -1896,13 +1959,6 @@ renderStats = function() {
   originalRenderStats();
   addStatsClickEvents();
 };
-
-// OK Click handler (for collect section)
-function okClick() {
-  alert('✅ Ok Clicked Successfully');
-}
-
 </script>
-
 </body>
 </html>
