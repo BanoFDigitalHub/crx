@@ -4,26 +4,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="CRX Earning Referral Program - Invite friends and earn rewards. Get $1 for every 5 successful referrals with unlimited earning potential.">
-<meta name="keywords" content="CRX earning, referral program, earn money online, passive income, referral rewards">
 <title>Referral Program - CRX Earning Platform</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --bg-tertiary: #f1f3f5;
-  --text-primary: #1a1a1a;
+  --text-primary: #0f172a;
   --text-secondary: #64748b;
   --text-tertiary: #94a3b8;
-  --border-color: #e5e7eb;
+  --border-color: #e2e8f0;
   --accent-primary: #6366f1;
   --accent-secondary: #8b5cf6;
   --success: #10b981;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  --card-hover: 0 8px 16px rgba(0,0,0,0.1);
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  --card-hover: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 [data-theme="dark"] {
@@ -57,7 +53,6 @@ body {
   padding: 0 16px;
 }
 
-/* Mobile Header */
 .mobile-header {
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
@@ -136,17 +131,14 @@ body {
   stroke: var(--text-secondary);
 }
 
-/* Desktop Sidebar */
 .desktop-sidebar {
   display: none;
 }
 
-/* Main Content */
 .main-content {
   padding: 20px 0 100px;
 }
 
-/* Skeleton Loading */
 .skeleton {
   background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
   background-size: 200% 100%;
@@ -167,7 +159,7 @@ body {
 
 .skeleton-card {
   background: var(--bg-primary);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 20px;
   margin-bottom: 16px;
   border: 1px solid var(--border-color);
@@ -195,7 +187,6 @@ body {
   margin-bottom: 10px;
 }
 
-/* Page Title */
 .page-title {
   margin-bottom: 24px;
 }
@@ -211,79 +202,83 @@ body {
   font-size: 14px;
 }
 
-/* Stats Grid */
 .stats-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .stat-card {
   background: var(--bg-primary);
-  border-radius: 12px;
-  padding: 18px;
+  border-radius: 16px;
+  padding: 24px;
   border: 1px solid var(--border-color);
   box-shadow: var(--card-shadow);
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--card-hover);
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
-  font-weight: 600;
-  margin-bottom: 6px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.level-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 32px;
+  box-shadow: var(--card-shadow);
+}
+
+.level-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.level-badge {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.stat-value {
-  font-size: 28px;
+.level-reward {
+  font-size: 24px;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--success);
 }
 
-/* Reward Box */
-.reward-box {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
-  border: 2px solid var(--accent-primary);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.reward-header {
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.reward-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.reward-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.progress-container {
-  background: var(--bg-primary);
+.progress-info {
+  background: var(--bg-secondary);
   border-radius: 10px;
   padding: 16px;
   margin-bottom: 16px;
 }
 
-.progress-header {
+.progress-stats {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -303,11 +298,11 @@ body {
 }
 
 .progress-bar-bg {
-  height: 8px;
-  background: var(--bg-secondary);
+  height: 10px;
+  background: var(--bg-tertiary);
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .progress-bar-fill {
@@ -321,17 +316,6 @@ body {
   font-size: 11px;
   color: var(--text-tertiary);
   text-align: center;
-}
-
-.reward-amount {
-  font-size: 32px;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--success), #059669);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-align: center;
-  margin: 14px 0;
 }
 
 .claim-btn {
@@ -362,32 +346,145 @@ body {
   cursor: not-allowed;
 }
 
-/* Section Card */
+.levels-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.level-item {
+  background: var(--bg-primary);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.level-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-hover);
+}
+
+.level-item.completed {
+  border-color: var(--success);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.03), rgba(5, 150, 105, 0.03));
+}
+
+.level-item.current {
+  border-color: var(--accent-primary);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.03), rgba(139, 92, 246, 0.03));
+}
+
+.level-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.level-number {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.level-item.completed .level-number {
+  color: var(--success);
+}
+
+.level-status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.level-status.completed {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+
+.level-status.current {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--accent-primary);
+}
+
+.level-status.locked {
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary);
+}
+
+.level-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.level-target {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.level-target strong {
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.level-reward-amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.checkmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background: var(--success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark svg {
+  width: 14px;
+  height: 14px;
+  stroke: #fff;
+  stroke-width: 3;
+}
+
 .section-card {
   background: var(--bg-primary);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 16px;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
   border: 1px solid var(--border-color);
   box-shadow: var(--card-shadow);
 }
 
 .section-title {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .section-title svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   stroke: var(--accent-primary);
 }
 
-/* Code Box */
 .code-container {
   background: var(--bg-secondary);
   border: 2px dashed var(--border-color);
@@ -437,7 +534,6 @@ body {
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
-/* Share Section */
 .share-section {
   margin-top: 16px;
 }
@@ -463,17 +559,17 @@ body {
 
 .share-buttons {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
 .share-btn {
-  padding: 10px;
+  padding: 12px 8px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 13px;
   transition: all 0.3s;
   display: flex;
   align-items: center;
@@ -483,8 +579,8 @@ body {
 }
 
 .share-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
 .share-whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); }
@@ -492,7 +588,6 @@ body {
 .share-facebook { background: linear-gradient(135deg, #1877f2, #0c5dbe); }
 .share-twitter { background: linear-gradient(135deg, #1da1f2, #0c7abf); }
 
-/* Rules Box */
 .rules-container {
   background: var(--bg-secondary);
   border-radius: 10px;
@@ -531,7 +626,6 @@ body {
   flex: 1;
 }
 
-/* Referrals List */
 .referrals-container {
   max-height: 400px;
   overflow-y: auto;
@@ -638,7 +732,6 @@ body {
   color: var(--text-secondary);
 }
 
-/* Accordion */
 .accordion {
   border-radius: 12px;
   overflow: hidden;
@@ -713,67 +806,6 @@ body {
   line-height: 1.6;
 }
 
-/* App Promotion */
-.app-promo {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  border-radius: 12px;
-  padding: 24px 16px;
-  text-align: center;
-  color: #fff;
-}
-
-.app-icon {
-  width: 50px;
-  height: 50px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 12px;
-}
-
-.app-icon svg {
-  width: 28px;
-  height: 28px;
-  stroke: #fff;
-}
-
-.app-promo h3 {
-  font-size: 18px;
-  margin-bottom: 6px;
-}
-
-.app-promo p {
-  font-size: 13px;
-  opacity: 0.9;
-  margin-bottom: 16px;
-}
-
-.app-stores {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.store-badge {
-  padding: 8px 16px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: 1px solid rgba(255,255,255,0.3);
-}
-
-.store-badge:hover {
-  background: rgba(255,255,255,0.3);
-  transform: translateY(-2px);
-}
-
-/* Toast */
 .toast {
   position: fixed;
   top: 70px;
@@ -796,7 +828,6 @@ body {
   to { opacity: 1; transform: translate(-50%, 0); }
 }
 
-/* Bottom Navigation - Mobile */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -843,7 +874,30 @@ body {
   display: none;
 }
 
-/* Tablet Styles */
+@media (max-width: 639px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .share-buttons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
 @media (min-width: 640px) {
   .container {
     padding: 0 24px;
@@ -859,19 +913,28 @@ body {
   
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 20px;
+  }
+
+  .levels-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
   
   .share-buttons {
     grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
   }
   
   .section-card {
-    padding: 24px;
+    padding: 32px;
+  }
+
+  .level-card {
+    padding: 32px;
   }
 }
 
-/* Desktop Styles */
 @media (min-width: 769px) {
   .mobile-header {
     display: none;
@@ -984,11 +1047,11 @@ body {
 
   .main-content {
     margin-left: 280px;
-    padding: 32px 0;
+    padding: 40px 0;
   }
   
   .page-title {
-    margin-bottom: 32px;
+    margin-bottom: 40px;
   }
   
   .page-title h1 {
@@ -996,89 +1059,33 @@ body {
   }
   
   .stats-grid {
-    margin-bottom: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .levels-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
   
   .stat-card {
-    padding: 20px;
+    padding: 28px;
   }
   
   .stat-value {
-    font-size: 32px;
-  }
-  
-  .reward-box {
-    padding: 24px;
-    margin-bottom: 24px;
-  }
-  
-  .reward-title {
-    font-size: 20px;
-  }
-  
-  .reward-amount {
     font-size: 36px;
   }
-  
-  .claim-btn {
-    padding: 16px;
-    font-size: 15px;
+
+  .level-card {
+    padding: 36px;
   }
-  
+
   .section-card {
-    margin-bottom: 24px;
-  }
-  
-  .section-title {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .code-value {
-    font-size: 24px;
-  }
-  
-  .copy-btn {
-    padding: 12px 24px;
-    font-size: 14px;
-  }
-  
-  .rule-text {
-    font-size: 13px;
-  }
-  
-  .referral-item {
-    padding: 14px;
-  }
-  
-  .referral-avatar {
-    width: 44px;
-    height: 44px;
-    font-size: 16px;
-  }
-  
-  .accordion-title {
-    font-size: 14px;
-  }
-  
-  .accordion-body {
-    font-size: 13px;
-  }
-  
-  .app-promo {
-    padding: 32px 24px;
-  }
-  
-  .app-promo h3 {
-    font-size: 20px;
-  }
-  
-  .app-promo p {
-    font-size: 14px;
+    padding: 36px;
   }
 }
 
-/* Large Desktop */
 @media (min-width: 1200px) {
   .container {
     padding: 0 32px;
@@ -1093,7 +1100,7 @@ body {
   <div class="sidebar-logo">
     <div class="sidebar-logo-content">
       <div class="logo">
-        <img src="../images/earn.jpeg" alt="CRX Logo" id="sidebarLogoImg">
+        <img src="../images/earn.jpeg" alt="CRX Logo">
       </div>
       <div class="brand-name">CRX</div>
     </div>
@@ -1187,7 +1194,6 @@ body {
       <div class="skeleton-card">
         <div class="skeleton skeleton-title"></div>
         <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-text"></div>
         <div class="skeleton skeleton-button"></div>
       </div>
     </div>
@@ -1198,7 +1204,7 @@ body {
       <!-- Page Title -->
       <div class="page-title">
         <h1>Referral Program</h1>
-        <p>Invite friends and earn unlimited rewards together</p>
+        <p>Invite friends and unlock progressive rewards with our multi-level system</p>
       </div>
 
       <!-- Stats Grid -->
@@ -1212,31 +1218,53 @@ body {
           <div class="stat-label">Total Earned</div>
           <div class="stat-value">$<span id="totalEarned">0</span></div>
         </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Current Level</div>
+          <div class="stat-value" id="currentLevel">0</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Next Reward</div>
+          <div class="stat-value">$<span id="nextReward">1</span></div>
+        </div>
       </div>
 
-      <!-- Collect Reward Box -->
-      <div class="reward-box">
-        <div class="reward-header">
-          <div class="reward-title">Collect Your Reward</div>
-          <div class="reward-desc">Earn $1 for every 5 successful referrals</div>
+      <!-- Current Progress Card -->
+      <div class="level-card" id="currentLevelCard">
+        <div class="level-header">
+          <div class="level-badge" id="levelBadge">Level 1</div>
+          <div class="level-reward" id="levelRewardAmount">$1.00</div>
         </div>
         
-        <div class="progress-container">
-          <div class="progress-header">
-            <div class="progress-label">Current Progress</div>
-            <div class="progress-count"><span id="currentProgress">0</span> / 5</div>
+        <div class="progress-info">
+          <div class="progress-stats">
+            <div class="progress-label">Progress to Next Level</div>
+            <div class="progress-count"><span id="currentProgress">0</span> / <span id="targetReferrals">3</span></div>
           </div>
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
           </div>
-          <div class="progress-text" id="progressText">Invite 5 friends to unlock reward</div>
+          <div class="progress-text" id="progressText">Complete 3 referrals to unlock Level 1 reward</div>
         </div>
 
-        <div class="reward-amount">$1.00</div>
-        
         <button id="claimBtn" class="claim-btn locked">
-          <span>Need <span id="remainingCount">5</span> More Referrals</span>
+          <span id="claimBtnText">Need 3 More Referrals</span>
         </button>
+      </div>
+
+      <!-- Reward Levels -->
+      <div class="section-card">
+        <div class="section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Reward Levels
+        </div>
+        
+        <div class="levels-grid" id="levelsGrid">
+          <!-- Levels will be populated by JavaScript -->
+        </div>
       </div>
 
       <!-- Referral Code -->
@@ -1265,183 +1293,152 @@ body {
             <button class="share-btn share-twitter" onclick="shareTwitter()">Twitter</button>
           </div>
         </div>
-      </div><!-- How It Works / Program Rules -->
-<div class="section-card">
-  <div class="section-title">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-    </svg>
-    Program Rules
-  </div>
-
-  <div class="rules-container">
-    <div class="rule-item">
-      <div class="rule-number">1</div>
-      <div class="rule-text">
-        Share your unique <strong>referral code</strong> with friends through social media or direct message.
       </div>
-    </div>
 
-    <div class="rule-item">
-      <div class="rule-number">2</div>
-      <div class="rule-text">
-        A referral is only counted when your friend <strong>registers using your code</strong> and
-        <strong>activates any plan.</strong>
-      </div>
-    </div>
-
-    <div class="rule-item">
-      <div class="rule-number">3</div>
-      <div class="rule-text">
-        For every <strong>5 successful referrals</strong>, you will earn <strong>$1 reward</strong>.
-      </div>
-    </div>
-
-    <div class="rule-item">
-      <div class="rule-number">4</div>
-      <div class="rule-text">
-        At <strong>10 successful referrals</strong>, your total reward will increase to <strong>$2</strong>.
-      </div>
-    </div>
-
-    <div class="rule-item">
-      <div class="rule-number">5</div>
-      <div class="rule-text">
-        At <strong>15 successful referrals</strong>, you’ll be promoted to <strong>Team Leader</strong> in the company and
-        will also receive a <strong>separate monthly salary.</strong>
-      </div>
-    </div>
-
-    <div class="rule-item">
-      <div class="rule-number">6</div>
-      <div class="rule-text">
-        When you reach <strong>100 referrals</strong>, you’ll earn the <strong>Team Leader + Gift Reward</strong> from the company
-        and continue receiving your <strong>salary benefits.</strong>
-      </div>
-    </div>
-
-    <div class="rule-item">
-      <div class="rule-number">7</div>
-      <div class="rule-text">
-        No limits — you can invite unlimited people and climb the reward ladder continuously.
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Your Referrals -->
-<div class="section-card">
-  <div class="section-title">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-    </svg>
-    Your Referrals (<span id="referralCount">0</span>)
-  </div>
-  <div class="referrals-container" id="referralsList"></div>
-</div>
-
-<!-- FAQ Accordion -->
-<div class="section-card">
-  <div class="section-title">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    Frequently Asked Questions
-  </div>
-
-  <div class="accordion">
-
-    <div class="accordion-item">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <div class="accordion-title">How do I start earning from referrals?</div>
-        <div class="accordion-icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </div>
-      </div>
-      <div class="accordion-content">
-        <div class="accordion-body">
-          Share your referral code with your friends or community. When someone registers using your code
-          and activates a plan, they’ll count as your referral. You start earning once you complete your first 5 active referrals.
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <div class="accordion-title">When will I get my $1 reward?</div>
-        <div class="accordion-icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </div>
-      </div>
-      <div class="accordion-content">
-        <div class="accordion-body">
-          Once your 5 referred users have successfully registered and activated a plan, you’ll instantly receive $1 in your wallet.  
-          You can withdraw it anytime or let it grow with more referrals.
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <div class="accordion-title">What happens when I reach 15 or 100 referrals?</div>
-        <div class="accordion-icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </div>
-      </div>
-      <div class="accordion-content">
-        <div class="accordion-body">
-          After 15 referrals, you’ll officially become a <strong>Team Leader</strong> and start receiving a separate salary from the company.  
-          When you reach 100 referrals, you’ll also receive a <strong>special company gift</strong> in addition to your Team Leader position and salary.
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <div class="accordion-title">Is there any limit to how much I can earn?</div>
-        <div class="accordion-icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </div>
-      </div>
-      <div class="accordion-content">
-        <div class="accordion-body">
-          No limit at all! You can invite unlimited users. Every 5 new active referrals add to your rewards and unlock bigger milestones and positions.
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-      <!-- App Promotion -->
+      <!-- Program Rules -->
       <div class="section-card">
-        <div class="app-promo">
-          <div class="app-icon">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-            </svg>
+        <div class="section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Program Rules
+        </div>
+
+        <div class="rules-container">
+          <div class="rule-item">
+            <div class="rule-number">1</div>
+            <div class="rule-text">
+              Share your unique <strong>referral code</strong> with friends through social media or direct message.
+            </div>
           </div>
-          <h3>CRX Mobile App Coming Soon</h3>
-          <p>Manage your referrals and earnings on the go with our upcoming mobile application</p>
-          <div class="app-stores">
-            <div class="store-badge">App Store</div>
-            <div class="store-badge">Play Store</div>
+
+          <div class="rule-item">
+            <div class="rule-number">2</div>
+            <div class="rule-text">
+              A referral is only counted when your friend <strong>registers using your code</strong> and <strong>activates any plan</strong>.
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">3</div>
+            <div class="rule-text">
+              Rewards are unlocked progressively: <strong>Level 1</strong> (3 referrals = $1), <strong>Level 2</strong> (6 referrals = $2), <strong>Level 3</strong> (9 referrals = $3).
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">4</div>
+            <div class="rule-text">
+              At <strong>50 referrals</strong>, you'll unlock a special <strong>$13 bonus reward</strong> and advance to higher tiers.
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">5</div>
+            <div class="rule-text">
+              Reach <strong>100 referrals</strong> to become a <strong>Team Leader</strong> and earn a <strong>$25 mega reward</strong> plus monthly salary benefits.
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">6</div>
+            <div class="rule-text">
+              You must claim each level's reward before progressing to the next level. Rewards don't expire.
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">7</div>
+            <div class="rule-text">
+              No limits — invite unlimited people and continue climbing the reward ladder for maximum earnings.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Your Referrals -->
+      <div class="section-card">
+        <div class="section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+          Your Referrals (<span id="referralCount">0</span>)
+        </div>
+        <div class="referrals-container" id="referralsList"></div>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="section-card">
+        <div class="section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Frequently Asked Questions
+        </div>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="accordion-title">How does the multi-level reward system work?</div>
+              <div class="accordion-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                Our system rewards you at multiple milestones. Level 1 unlocks at 3 referrals ($1), Level 2 at 6 referrals ($2), Level 3 at 9 referrals ($3), and so on. Each level must be claimed before moving to the next, giving you complete control over your earnings.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="accordion-title">When can I claim my rewards?</div>
+              <div class="accordion-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                Once you reach the required number of active referrals for a level, the claim button activates instantly. Your reward is added to your wallet immediately upon claiming, and you can withdraw it anytime.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="accordion-title">What happens at 50 and 100 referrals?</div>
+              <div class="accordion-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                At 50 referrals, you unlock a special $13 bonus reward. When you reach 100 referrals, you'll receive a $25 mega reward and become an official Team Leader with additional monthly salary benefits and exclusive company gifts.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="accordion-title">Is there a limit to earnings?</div>
+              <div class="accordion-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                Absolutely no limit! You can invite unlimited users and progress through all reward levels. The more you refer, the more you earn. Our top earners continue to benefit from ongoing Team Leader positions and salary packages.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1496,6 +1493,16 @@ body {
 </div>
 
 <script>
+// Reward levels configuration (matches backend)
+const rewardLevels = [
+  { level: 1, referrals: 3, reward: 1 },
+  { level: 2, referrals: 6, reward: 2 },
+  { level: 3, referrals: 9, reward: 3 },
+  { level: 4, referrals: 12, reward: 4 },
+  { level: 5, referrals: 50, reward: 13 },
+  { level: 6, referrals: 100, reward: 25 }
+];
+
 // Theme Management
 function toggleTheme() {
   const html = document.documentElement;
@@ -1579,18 +1586,29 @@ document.addEventListener("DOMContentLoaded", function () {
       safeSetText('totalReferrals', data.referralCount || 0);
       safeSetText('referralCount', data.referrals?.length || 0);
 
-      const totalBatches = Math.floor((data.referralCount || 0) / 5);
-      safeSetText('totalEarned', totalBatches);
+      // Calculate total earned based on completed levels
+      const lastLevel = data.lastProcessedLevel || 0;
+      const totalEarned = rewardLevels
+        .filter(l => l.level <= lastLevel)
+        .reduce((sum, l) => sum + l.reward, 0);
+      safeSetText('totalEarned', totalEarned);
+      safeSetText('currentLevel', lastLevel);
+
+      // Find next reward
+      const nextLevel = rewardLevels.find(l => l.level === lastLevel + 1);
+      if (nextLevel) {
+        safeSetText('nextReward', nextLevel.reward);
+      }
 
       referralLink = `${window.location.origin}/register.html?ref=${data.referralCode}`;
       safeSetText('shareLink', referralLink);
 
       updateProgress();
+      renderLevelsGrid();
       renderReferralsList(data.referrals || []);
 
     } catch (e) {
       console.error('Error loading referral data:', e);
-      // Show content even on error
       document.getElementById('loadingSkeleton').classList.add('hidden');
       document.getElementById('mainContent').classList.remove('hidden');
     }
@@ -1604,36 +1622,99 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateProgress() {
     if (!userData) return;
 
-    const lastBatch = userData.lastProcessedBatch || 0;
     const totalReferrals = userData.referralCount || 0;
-    const currentBatchCount = totalReferrals - (lastBatch * 5);
-    const remaining = Math.max(0, 5 - currentBatchCount);
-    const progress = Math.min(100, (currentBatchCount / 5) * 100);
+    const lastLevel = userData.lastProcessedLevel || 0;
 
-    safeSetText('currentProgress', currentBatchCount);
+    // Find the next level user needs to achieve
+    const nextLevel = rewardLevels.find(l => l.level === lastLevel + 1);
+    
+    if (!nextLevel) {
+      // User has completed all levels
+      const claimBtn = document.getElementById('claimBtn');
+      const textEl = document.getElementById('progressText');
+      if (claimBtn) {
+        claimBtn.className = 'claim-btn locked';
+        claimBtn.innerHTML = '<span>🎉 All Levels Completed!</span>';
+      }
+      if (textEl) textEl.textContent = 'Congratulations! You have unlocked all reward levels.';
+      return;
+    }
+
+    const targetReferrals = nextLevel.referrals;
+    const currentProgress = totalReferrals;
+    const remaining = Math.max(0, targetReferrals - currentProgress);
+    const progress = Math.min(100, (currentProgress / targetReferrals) * 100);
+
+    safeSetText('currentProgress', currentProgress);
+    safeSetText('targetReferrals', targetReferrals);
+    safeSetText('levelBadge', `Level ${nextLevel.level}`);
+safeSetText('levelRewardAmount', `$${nextLevel.reward.toFixed(2)}`);
+
+
     const barEl = document.getElementById('progressBar');
     if (barEl) barEl.style.width = progress + '%';
 
     const claimBtn = document.getElementById('claimBtn');
-    const remainEl = document.getElementById('remainingCount');
     const textEl = document.getElementById('progressText');
 
-    if (currentBatchCount >= 5) {
+    if (totalReferrals >= targetReferrals) {
+      // User can claim the reward
       if (claimBtn) {
         claimBtn.className = 'claim-btn active';
-        claimBtn.innerHTML = '<span>Claim $1 Reward Now</span>';
+        claimBtn.innerHTML = `<span>🎁 Claim Level ${nextLevel.level} Reward (${nextLevel.reward})</span>`;
         claimBtn.onclick = claimReward;
       }
-      if (textEl) textEl.textContent = 'Reward available! Click claim button to collect';
+      if (textEl) textEl.textContent = `Level ${nextLevel.level} reward available! Click to claim ${nextLevel.reward}`;
     } else {
+      // User needs more referrals
       if (claimBtn) {
         claimBtn.className = 'claim-btn locked';
         claimBtn.innerHTML = `<span>Need ${remaining} More Referral${remaining !== 1 ? 's' : ''}</span>`;
         claimBtn.onclick = null;
       }
-      if (remainEl) remainEl.textContent = remaining;
-      if (textEl) textEl.textContent = `Invite ${remaining} more friend${remaining !== 1 ? 's' : ''} to unlock reward`;
+      if (textEl) textEl.textContent = `Invite ${remaining} more friend${remaining !== 1 ? 's' : ''} to unlock Level ${nextLevel.level} (${nextLevel.reward})`;
     }
+  }
+
+  function renderLevelsGrid() {
+    const gridEl = document.getElementById('levelsGrid');
+    if (!gridEl || !userData) return;
+
+    const totalReferrals = userData.referralCount || 0;
+    const lastLevel = userData.lastProcessedLevel || 0;
+
+    let html = '';
+    rewardLevels.forEach(level => {
+      const isCompleted = level.level <= lastLevel;
+      const isCurrent = level.level === lastLevel + 1 && totalReferrals >= level.referrals;
+      const isLocked = level.level > lastLevel + 1 || (level.level === lastLevel + 1 && totalReferrals < level.referrals);
+
+      let statusClass = 'locked';
+      let statusText = 'Locked';
+      if (isCompleted) {
+        statusClass = 'completed';
+        statusText = 'Completed';
+      } else if (isCurrent) {
+        statusClass = 'current';
+        statusText = 'Ready';
+      }
+
+      html += `
+        <div class="level-item ${isCompleted ? 'completed' : isCurrent ? 'current' : ''}">
+          ${isCompleted ? '<div class="checkmark"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div>' : ''}
+          <div class="level-item-header">
+            <div class="level-number">Level ${level.level}</div>
+            <div class="level-status ${statusClass}">${statusText}</div>
+          </div>
+          <div class="level-details">
+            <div class="level-target">Target: <strong>${level.referrals} referrals</strong></div>
+            <div class="level-reward-amount">${level.reward}$</div>
+          </div>
+        </div>
+      `;
+    });
+
+    gridEl.innerHTML = html;
   }
 
   function renderReferralsList(referrals) {
@@ -1662,6 +1743,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const joinDate = ref.createdAt
         ? new Date(ref.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
         : 'Recently';
+      const badgeText = ref.activePlan ? 'Active' : 'Pending';
+      const badgeClass = ref.activePlan ? 'referral-badge' : 'referral-badge' ;
 
       html += `
         <div class="referral-item">
@@ -1670,7 +1753,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="referral-name">${ref.name || 'User'}</div>
             <div class="referral-date">Joined: ${joinDate}</div>
           </div>
-          <div class="referral-badge">Active</div>
+          <div class="${badgeClass}">${badgeText}</div>
         </div>
       `;
     });
@@ -1678,7 +1761,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function claimReward() {
-    if (!confirm('Claim your $1 reward? This will be added to your wallet instantly.')) return;
+    if (!confirm('Claim your reward? This will be added to your wallet instantly.')) return;
 
     const claimBtn = document.getElementById('claimBtn');
     if (claimBtn) {
@@ -1700,7 +1783,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const data = await res.json();
       if (data.success) {
-        showToast(`Success! ${data.rewardAmount} added to your wallet`);
+        showToast(`${data.message} - ${data.rewardAmount} added to your wallet!`);
         await loadReferralData();
       } else {
         showToast(data.message || 'Error claiming reward');
@@ -1751,7 +1834,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.shareWhatsApp = function() {
     if (!userData) return;
-    const message = `Join CRX Earning and start making money online!\n\nEarn daily by completing simple tasks\nEasy withdrawals and instant payouts\nUse my referral code: ${userData.referralCode}\n\nSign up here: ${referralLink}`;
+    const message = `🎯 Join CRX Earning and start making money online!\n\n💰 Progressive reward system - earn more as you grow\n✅ Easy withdrawals and instant payouts\n🎁 Use my referral code: ${userData.referralCode}\n\n👉 Sign up here: ${referralLink}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
   };
 

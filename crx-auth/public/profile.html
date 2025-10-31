@@ -1347,32 +1347,55 @@ body {
       <p style="margin-top: 18px;"><strong>🌍 Join A CRX today</strong> — where <em>trust meets technology</em> and <strong>dreams turn into success!</strong></p>
     </div>
   </div>
+</div><!-- Support Card -->
+<div class="support-card">
+  <div class="support-icon-wrapper">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+</path>
+
+    </svg>
+  </div>
+
+  <h3>Need Help?</h3>
+  <p>Our support team is available 24/7 to assist you with any questions or concerns</p>
+
+  <div class="contact-methods">
+    <!-- WhatsApp Button -->
+    <button class="contact-btn"
+      onclick="window.open('https://wa.me/923233294217?text=Hello%20Support%20Team%2C%20I%20need%20help%20with%20my%20account.', '_blank')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+        </path>
+      </svg>
+      WhatsApp
+    </button>
+
+    <!-- Email Button -->
+    <button class="contact-btn"
+      onclick="window.location.href='mailto:isabellamandiscrx@gmail.com'">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+        </path>
+      </svg>
+      Email
+    </button>
+
+    <!-- Live Chat Button -->
+    <button class="contact-btn"
+      onclick="window.location.href='support.html'">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 19v-6a9 9 0 0118 0v6a2 2 0 01-2 2h-3l-2 2-2-2H5a2 2 0 01-2-2z" />
+      </svg>
+      Live Chat
+    </button>
+  </div>
 </div>
 
-    <!-- Support Card -->
-    <div class="support-card">
-      <div class="support-icon-wrapper">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
-        </svg>
-      </div>
-      <h3>Need Help?</h3>
-      <p>Our support team is available 24/7 to assist you with any questions or concerns</p>
-      <div class="contact-methods">
-        <button class="contact-btn" onclick="window.open('https://wa.me/923011234567', '_blank')">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-          </svg>
-          WhatsApp
-        </button>
-        <button class="contact-btn" onclick="window.location.href='mailto:support@crxearning.com'">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-          </svg>
-          Email
-        </button>
-      </div>
-    </div>
 
     <!-- FAQ Section -->
     <div class="section">
@@ -1446,7 +1469,7 @@ body {
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            Share your unique referral code with friends. When they register and activate a plan, you earn 1 referral count. For every 5 successful referrals, you can claim a $1 bonus from your referral dashboard.
+            Share your unique referral code with friends. When they register and activate a plan, you earn 1 referral count. For every 3 successful referrals, you can claim a $1 bonus from your referral dashboard. Also We have Multiple Level with Huge prize
           </div>
         </div>
       </div>
@@ -1681,11 +1704,11 @@ async function loadProfile() {
           </div>
           <div style="text-align: center; padding: 16px; background: var(--bg-secondary); border-radius: 10px;">
             <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Investment</div>
-            <div style="font-size: 18px; font-weight: 700;">${data.activePlan.totalInvestment}</div>
+            <div style="font-size: 18px; font-weight: 700;">${data.activePlan.totalInvestment}$</div>
           </div>
           <div style="text-align: center; padding: 16px; background: var(--bg-secondary); border-radius: 10px;">
             <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Daily Profit</div>
-            <div style="font-size: 18px; font-weight: 700; color: var(--success);">${data.activePlan.dailyProfit}</div>
+            <div style="font-size: 18px; font-weight: 700; color: var(--success);">${data.activePlan.dailyProfit}$</div>
           </div>
           <div style="text-align: center; padding: 16px; background: var(--bg-secondary); border-radius: 10px;">
             <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Expires</div>

@@ -26,5 +26,8 @@
   ], authCtrl.login);
 
   router.get('/dashboard', auth, authCtrl.dashboard);
+  // 🟢 Add these two routes (fixes 404 error)
+router.put('/update-profile', auth, authCtrl.updateProfile);
+router.put('/change-password', auth, authCtrl.changePassword);
 
   module.exports = router;

@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -9,16 +8,22 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   securityQuestion: { type: String, required: true },
   securityAnswerHash: { type: String, required: true },
+
   referralCode: { type: String, required: true, unique: true },
   referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   referralCount: { type: Number, default: 0 },
-  lastProcessedBatch: { type: Number, default: 0 },
+  lastProcessedLevel: { type: Number, default: 0 },
   activePlan: { type: mongoose.Schema.Types.ObjectId, ref: 'Plan', default: null },
 
   wallet: { type: Number, default: 0 },
+  referrals: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+previousPasswords: [{ type: String }],
+previousEmails: [{ type: String }],
+previousUsernames: [{ type: String }],
 
-  // referrals etc.
-  referrals: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
-}, { timestamps:true });
+  tokenVersion: { type: Number, default: 0 }, // 👈 add this line
+  lastPasswordChange: { type: Date, default: Date.now },
+
+}, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

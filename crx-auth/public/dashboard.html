@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRX Earning - Dashboard</title>
+<title>CRX - Dashboard</title>
 <style>
 :root {
   --bg-primary: #ffffff;
@@ -1200,7 +1200,7 @@ body {
 <div class="welcome-section">
   <div class="container">
     <div class="welcome-content">
-      <h1>Welcome back, <span id="userName">User</span> 👋</h1>
+      <h1>Hi, <span id="userName">User</span> 👋</h1>
       <p>Track your earnings, manage plans, and grow your income.</p>
     </div>
   </div>
@@ -1208,9 +1208,9 @@ body {
 
 <!-- Main Content -->
 <div class="container">
-  
-  <!-- Loading Skeleton -->
+ <!-- Loading Skeleton -->
   <div id="loadingSkeleton">
+    <!-- Stats Cards Skeleton -->
     <div class="stats-grid">
       <div class="skeleton-card">
         <div class="skeleton skeleton-header"></div>
@@ -1228,8 +1228,48 @@ body {
         <div class="skeleton skeleton-subtitle"></div>
       </div>
     </div>
-  </div>
 
+    <!-- Recent Withdrawals Skeleton -->
+    <div class="section" style="margin-top: 40px;">
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text"></div>
+      </div>
+    </div>
+
+    <!-- Plans Skeleton -->
+    <div class="section">
+      <div class="skeleton skeleton-title"></div>
+      <div class="plans-grid" style="margin-top: 24px;">
+        <div class="skeleton-card" style="height: 220px;"></div>
+        <div class="skeleton-card" style="height: 220px;"></div>
+        <div class="skeleton-card" style="height: 220px;"></div>
+        <div class="skeleton-card" style="height: 220px;"></div>
+      </div>
+    </div>
+
+    <!-- Coming Soon Skeleton -->
+    <div class="section">
+      <div class="skeleton-card" style="height: 200px;"></div>
+    </div>
+
+    <!-- Support Skeleton -->
+    <div class="section">
+      <div class="skeleton-card" style="height: 250px;"></div>
+    </div>
+
+    <!-- FAQ Skeleton -->
+    <div class="section">
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-text" style="height: 50px; margin-bottom: 10px;"></div>
+        <div class="skeleton skeleton-text" style="height: 50px; margin-bottom: 10px;"></div>
+        <div class="skeleton skeleton-text" style="height: 50px; margin-bottom: 10px;"></div>
+        <div class="skeleton skeleton-text" style="height: 50px;"></div>
+      </div>
+    </div>
+  </div>
   <!-- Stats Cards -->
   <div id="mainContent" class="hidden">
     <div class="stats-grid">
@@ -1307,26 +1347,31 @@ body {
         <p>Manage your earnings on the go. Stay tuned for the launch!</p>
       </div>
     </div>
-
-    <!-- Need Help -->
-    <div class="section">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Need Help?</h2>
-          <p class="section-subtitle">Our support team is here for you</p>
-        </div>
-      </div>
-      <div class="support-card">
-        <div class="support-icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
-          </svg>
-        </div>
-        <h3>24/7 Support Available</h3>
-        <p>Get instant help from our dedicated support team</p>
-        <button class="support-btn" onclick="window.location.href='support.html'">Contact Support</button>
-      </div>
+<!-- Need Help -->
+<div class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Need Help?</h2>
+      <p class="section-subtitle">Our support team is here for you</p>
     </div>
+  </div>
+  <div class="support-card">
+    <div class="support-icon">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z">
+        </path>
+      </svg>
+    </div>
+    <h3>24/7 Support Available</h3>
+    <p>Get instant help from our dedicated support team</p>
+    <button class="support-btn"
+      onclick="window.open('https://wa.me/923233294217?text=Hello%20Support%20Team%2C%20I%20need%20help%20with%20my%20account.', '_blank')">
+      Contact Support
+    </button>
+  </div>
+</div>
+
 
     <!-- Trust & FAQs -->
     <div class="section">
@@ -1380,7 +1425,7 @@ body {
           </div>
           <div class="faq-answer">
             <div class="faq-answer-content">
-              You'll get a unique referral code. When someone registers using your code and activates a plan, you'll earn 1 referral count. For every 5 successful referrals, you can claim a $1 bonus from your referral dashboard.
+              You'll get a unique referral code. When someone registers using your code and activates a plan, you'll earn 1 referral count. For every 3 successful referrals, you can claim a $1 bonus from your referral dashboard. Also Bonus Level. 
             </div>
           </div>
         </div>
@@ -1466,14 +1511,14 @@ const plans = [
 ];
 
 const withdrawals = [
-  { user: "john***23", email: "jo***@gmail.com", amount: 450 },
-  { user: "sarah***89", email: "sa***@gmail.com", amount: 120 },
-  { user: "mike***45", email: "mi***@gmail.com", amount: 280 },
-  { user: "emma***12", email: "em***@gmail.com", amount: 350 },
-  { user: "alex***67", email: "al***@gmail.com", amount: 190 },
-  { user: "david***34", email: "da***@gmail.com", amount: 520 },
-  { user: "lisa***78", email: "li***@gmail.com", amount: 240 },
-  { user: "mark***56", email: "ma***@gmail.com", amount: 380 }
+  { user: "john***23", email: "jo***@gmail.com", amount: 12.5 },
+  { user: "sarah***89", email: "sa***@gmail.com", amount: 18.75 },
+  { user: "mike***45", email: "mi***@gmail.com", amount: 25 },
+  { user: "emma***12", email: "em***@gmail.com", amount: 31.25 },
+  { user: "alex***67", email: "al***@gmail.com", amount: 62.5 },
+  { user: "david***34", email: "da***@gmail.com", amount: 93.75 },
+  { user: "lisa***78", email: "li***@gmail.com", amount: 125 },
+  { user: "mark***56", email: "ma***@gmail.com", amount: 156.25 }
 ];
 
 // Theme Toggle
@@ -1568,7 +1613,7 @@ function renderWithdrawals() {
         <div class="withdrawal-email">${w.email}</div>
         <div class="withdrawal-time">Withdrew successfully</div>
       </div>
-      <div class="withdrawal-amount">${w.amount}</div>
+      <div class="withdrawal-amount">${w.amount}$</div>
     `;
     list.appendChild(item);
   });

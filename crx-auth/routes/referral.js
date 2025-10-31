@@ -1,16 +1,24 @@
-// routes/referralRoutes.js
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const auth = require('../middleware/authMiddleware');
 
+// Reward levels configuration
+const rewardLevels = [
+  { level: 1, referrals: 3, reward: 1 },
+  { level: 2, referrals: 6, reward: 2 },
+  { level: 3, referrals: 9, reward: 3 },
+  { level: 4, referrals: 12, reward: 4 },
+  { level: 5, referrals: 50, reward: 13 },
+  { level: 6, referrals: 100, reward: 25 }
+];
 
 // Get referral data for logged-in user
 router.get('/data', auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId)
-      .populate('referrals', 'name email createdAt')
-      .select('name referralCode referralCount lastProcessedBatch wallet referrals');
+      .populate('referrals', 'name email createdAt activePlan')
+      .select('name referralCode referralCount lastProcessedLevel wallet referrals');
     
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -20,7 +28,7 @@ router.get('/data', auth, async (req, res) => {
       name: user.name,
       referralCode: user.referralCode,
       referralCount: user.referralCount || 0,
-      lastProcessedBatch: user.lastProcessedBatch || 0,
+      lastProcessedLevel: user.lastProcessedLevel || 0,
       wallet: user.wallet || 0,
       referrals: user.referrals || []
     });
@@ -30,7 +38,7 @@ router.get('/data', auth, async (req, res) => {
   }
 });
 
-// Claim referral reward ($1 for every 5 referrals)
+// Claim referral reward (multi-level)
 router.post('/claim', auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
@@ -39,36 +47,42 @@ router.post('/claim', auth, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const lastBatch = user.lastProcessedBatch || 0;
     const totalReferrals = user.referralCount || 0;
-    const currentBatchCount = totalReferrals - (lastBatch * 5);
+    let lastLevel = user.lastProcessedLevel || 0;
 
-    // Check if user has at least 5 new referrals
-    if (currentBatchCount < 5) {
-      return res.status(400).json({ 
+    // Find highest eligible level
+    let eligibleLevel = null;
+    for (const lvl of rewardLevels) {
+      if (totalReferrals >= lvl.referrals && lvl.level > lastLevel) {
+        eligibleLevel = lvl;
+      }
+    }
+
+    if (!eligibleLevel) {
+      const nextLevel = rewardLevels.find(lvl => lvl.level === lastLevel + 1);
+      const remaining = nextLevel ? nextLevel.referrals - totalReferrals : 0;
+      return res.status(400).json({
         success: false,
-        message: `You need ${5 - currentBatchCount} more referrals to claim reward` 
+        message: `You need ${remaining > 0 ? remaining : 0} more referrals to reach next reward level`
       });
     }
 
-    // Calculate reward amount ($1 per 5 referrals)
-    const completedBatches = Math.floor(currentBatchCount / 5);
-    const rewardAmount = completedBatches * 1; // $1 per batch
-
-    // Update user wallet and processed batch count
+    // Add reward to wallet
+    const rewardAmount = eligibleLevel.reward;
     user.wallet = (user.wallet || 0) + rewardAmount;
-    user.lastProcessedBatch = lastBatch + completedBatches;
-    
+    user.lastProcessedLevel = eligibleLevel.level;
     await user.save();
 
     res.json({
       success: true,
-      message: 'Reward claimed successfully!',
-      rewardAmount: rewardAmount,
+      message: `🎉 Level ${eligibleLevel.level} reward claimed successfully!`,
+      rewardAmount,
       newWallet: user.wallet,
-      newLastProcessedBatch: user.lastProcessedBatch,
-      remainingReferrals: totalReferrals - (user.lastProcessedBatch * 5)
+      achievedLevel: eligibleLevel.level,
+      totalReferrals,
+      nextTarget: rewardLevels.find(l => l.level === eligibleLevel.level + 1) || null
     });
+
   } catch (error) {
     console.error('Error claiming reward:', error);
     res.status(500).json({ 
@@ -78,28 +92,32 @@ router.post('/claim', auth, async (req, res) => {
   }
 });
 
-// Get referral statistics (optional - for dashboard)
+// Get referral statistics (for dashboard)
 router.get('/stats', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.userId)
-      .populate('referrals', 'createdAt activePlan');
+    const user = await User.findById(req.userId).populate('referrals', 'createdAt activePlan');
     
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
     const totalReferrals = user.referralCount || 0;
-    const lastBatch = user.lastProcessedBatch || 0;
-    const currentBatchCount = totalReferrals - (lastBatch * 5);
-    const activeReferrals = user.referrals.filter(ref => ref.activePlan).length;
+    const lastLevel = user.lastProcessedLevel || 0;
+    const activeReferrals = user.referrals.filter(r => r.activePlan).length;
+
+    const nextLevel = rewardLevels.find(l => l.level === lastLevel + 1);
+    const remaining = nextLevel ? Math.max(0, nextLevel.referrals - totalReferrals) : 0;
+    const totalEarned = rewardLevels
+      .filter(l => l.level <= lastLevel)
+      .reduce((sum, l) => sum + l.reward, 0);
 
     res.json({
       totalReferrals,
-      currentBatchCount,
-      remainingForReward: Math.max(0, 5 - currentBatchCount),
-      totalBatchesClaimed: lastBatch,
-      totalEarned: lastBatch * 1, // $1 per batch
-      activeReferrals
+      activeReferrals,
+      lastLevel,
+      totalEarned,
+      remainingForNextLevel: remaining,
+      nextLevel
     });
   } catch (error) {
     console.error('Error fetching stats:', error);
