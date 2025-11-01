@@ -1543,13 +1543,10 @@ function toggleAccordion(element) {
     content.style.maxHeight = content.scrollHeight + 'px';
   }
 }
-
 // ======================
 // Backend API Base Setup
 // ======================
-const API_BASE = window.location.hostname === 'localhost'
-  ? 'http://localhost:5000'
-  : 'https://crx-backend.onrender.com'; // Render backend URL
+const API_BASE = `${window.location.protocol}//${window.location.host}`;
 
 // ======================
 // Data Management
@@ -1585,8 +1582,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await res.json();
       userData = data;
 
-      document.getElementById('loadingSkeleton').classList.add('hidden');
-      document.getElementById('mainContent').classList.remove('hidden');
+      document.getElementById('loadingSkeleton')?.classList.add('hidden');
+      document.getElementById('mainContent')?.classList.remove('hidden');
 
       safeSetText('referralCode', data.referralCode || '------');
       safeSetText('totalReferrals', data.referralCount || 0);
@@ -1611,8 +1608,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     } catch (e) {
       console.error('Error loading referral data:', e);
-      document.getElementById('loadingSkeleton').classList.add('hidden');
-      document.getElementById('mainContent').classList.remove('hidden');
+      document.getElementById('loadingSkeleton')?.classList.add('hidden');
+      document.getElementById('mainContent')?.classList.remove('hidden');
     }
   }
 
@@ -1634,12 +1631,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const barEl = document.getElementById('progressBar');
 
     if (!nextLevel) {
-      if (claimBtn) {
-        claimBtn.className = 'claim-btn locked';
-        claimBtn.innerHTML = '<span>🎉 All Levels Completed!</span>';
-      }
-      if (textEl) textEl.textContent = 'Congratulations! You have unlocked all reward levels.';
-      if (barEl) barEl.style.width = '100%';
+      claimBtn && (claimBtn.className = 'claim-btn locked', claimBtn.innerHTML = '<span>🎉 All Levels Completed!</span>');
+      textEl && (textEl.textContent = 'Congratulations! You have unlocked all reward levels.');
+      barEl && (barEl.style.width = '100%');
       return;
     }
 
@@ -1650,23 +1644,14 @@ document.addEventListener("DOMContentLoaded", function () {
     safeSetText('targetReferrals', nextLevel.referrals);
     safeSetText('levelBadge', `Level ${nextLevel.level}`);
     safeSetText('levelRewardAmount', `$${nextLevel.reward.toFixed(2)}`);
-
-    if (barEl) barEl.style.width = progress + '%';
+    barEl && (barEl.style.width = progress + '%');
 
     if (totalReferrals >= nextLevel.referrals) {
-      if (claimBtn) {
-        claimBtn.className = 'claim-btn active';
-        claimBtn.innerHTML = `<span>🎁 Claim Level ${nextLevel.level} Reward ($${nextLevel.reward})</span>`;
-        claimBtn.onclick = claimReward;
-      }
-      if (textEl) textEl.textContent = `Level ${nextLevel.level} reward available! Click to claim $${nextLevel.reward}`;
+      claimBtn && (claimBtn.className = 'claim-btn active', claimBtn.innerHTML = `<span>🎁 Claim Level ${nextLevel.level} Reward ($${nextLevel.reward})</span>`, claimBtn.onclick = claimReward);
+      textEl && (textEl.textContent = `Level ${nextLevel.level} reward available! Click to claim $${nextLevel.reward}`);
     } else {
-      if (claimBtn) {
-        claimBtn.className = 'claim-btn locked';
-        claimBtn.innerHTML = `<span>Need ${remaining} more referral${remaining !== 1 ? 's' : ''}</span>`;
-        claimBtn.onclick = null;
-      }
-      if (textEl) textEl.textContent = `Invite ${remaining} more friend${remaining !== 1 ? 's' : ''} to unlock Level ${nextLevel.level} ($${nextLevel.reward})`;
+      claimBtn && (claimBtn.className = 'claim-btn locked', claimBtn.innerHTML = `<span>Need ${remaining} more referral${remaining !== 1 ? 's' : ''}</span>`, claimBtn.onclick = null);
+      textEl && (textEl.textContent = `Invite ${remaining} more friend${remaining !== 1 ? 's' : ''} to unlock Level ${nextLevel.level} ($${nextLevel.reward})`);
     }
   }
 
@@ -1743,11 +1728,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!confirm('Claim your reward? This will be added to your wallet instantly.')) return;
 
     const claimBtn = document.getElementById('claimBtn');
-    if (claimBtn) {
-      claimBtn.disabled = true;
-      claimBtn.className = 'claim-btn locked';
-      claimBtn.innerHTML = '<span>Processing...</span>';
-    }
+    if (claimBtn) claimBtn.disabled = true, claimBtn.className = 'claim-btn locked', claimBtn.innerHTML = '<span>Processing...</span>';
 
     try {
       const res = await fetch(`${API_BASE}/api/referral/claim`, {
@@ -1768,7 +1749,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error(e);
       showToast('Error claiming reward. Please try again.');
     } finally {
-      if (claimBtn) claimBtn.disabled = false;
+      claimBtn && (claimBtn.disabled = false);
     }
   }
 
@@ -1778,8 +1759,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!codeEl) return;
     const code = codeEl.textContent;
     navigator.clipboard?.writeText(code).then(() => showToast('Referral code copied')).catch(() => {
-      const textarea = document.createElement('textarea');
-      textarea.value = code; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
+      const textarea = document.createElement('textarea'); textarea.value = code; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
       document.body.appendChild(textarea); textarea.select();
       try { document.execCommand('copy'); showToast('Code copied'); } catch { showToast('Failed to copy'); }
       document.body.removeChild(textarea);
@@ -1805,13 +1785,20 @@ document.addEventListener("DOMContentLoaded", function () {
     window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(userData.referralCode)}`, '_blank');
   };
 
-  window.shareFacebook = function() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`, '_blank'); };
-  window.shareTwitter = function() { if (!userData) return; window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(userData.referralCode)}&url=${encodeURIComponent(referralLink)}`, '_blank'); };
+  window.shareFacebook = function() {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`, '_blank');
+  };
+  
+  window.shareTwitter = function() {
+    if (!userData) return;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(userData.referralCode)}&url=${encodeURIComponent(referralLink)}`, '_blank');
+  };
 
-  // Initial load + auto-refresh
+  // Initial load + auto-refresh every 30s
   loadReferralData();
-  setInterval(() => loadReferralData(), 30000);
+  setInterval(loadReferralData, 30000);
 });
+
 </script>
 </body>
 </html>
