@@ -1312,15 +1312,16 @@ body {
 <div class="toast" id="toast">
   <span id="toastMessage"></span>
 </div>
-<script>
-const API_BASE = '/api/user/tasks';
+<script>// ✅ CHANGE #1: Tasks API Base URL (Line 2)
+const API_BASE = 'https://crx-auth.onrender.com/api/user/tasks';  // 👈 CHANGED
+
 const token = sessionStorage.getItem('token');
 let tasks = [];
 let userTaskData = null;
 let currentVideo = null;
 let player = null;
 let trackingInterval = null;
-const requiredWatchPercentage = 95;
+const requiredWatchPercentage = 85;  // Changed from 95 to 85
 let youtubeReady = false;
 
 function onYouTubeIframeAPIReady() { 
@@ -1440,7 +1441,7 @@ async function loadTasks() {
 // Load Wallet
 async function loadWallet() {
   try {
-    const res = await fetch('/api/auth/dashboard', {
+    const res = await fetch('https://crx-auth.onrender.com/api/auth/dashboard', {  // 👈 CHANGED
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const data = await res.json();

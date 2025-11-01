@@ -1393,8 +1393,7 @@ body {
   </div>
 </div>
 
-<script>
-// Theme Toggle
+<script>// Theme Toggle
 function toggleTheme() {
   const html = document.documentElement;
   const currentTheme = html.getAttribute('data-theme');
@@ -1432,7 +1431,7 @@ if (!token) {
 
 let allRequests = [];
 
-// Load Wallet
+// ✅ CHANGE #1: Load Wallet API
 async function loadWallet() {
   const token = getToken();
   if (!token) {
@@ -1441,7 +1440,7 @@ async function loadWallet() {
   }
 
   try {
-    const res = await fetch('/api/auth/dashboard', {
+    const res = await fetch('https://crx-auth.onrender.com/api/auth/dashboard', {  // 👈 CHANGED
       headers: { 'Authorization': 'Bearer ' + token }
     });
 
@@ -1467,13 +1466,13 @@ async function loadWallet() {
   }
 }
 
-// Load Requests
+// ✅ CHANGE #2: Load Withdrawal History API
 async function loadRequests() {
   const token = getToken();
   if (!token) return;
 
   try {
-    const res = await fetch('/api/withdraw/history', {
+    const res = await fetch('https://crx-auth.onrender.com/api/withdraw/history', {  // 👈 CHANGED
       headers: { 'Authorization': 'Bearer ' + token }
     });
 
@@ -1574,7 +1573,7 @@ document.getElementById('amount').addEventListener('input', function() {
   }
 });
 
-// Form Submission
+// ✅ CHANGE #3: Submit Withdrawal Request API
 document.getElementById('withdrawForm').addEventListener('submit', async function(e) {
   e.preventDefault();
 
@@ -1605,7 +1604,7 @@ document.getElementById('withdrawForm').addEventListener('submit', async functio
   submitBtn.textContent = 'Processing...';
 
   try {
-    const res = await fetch('/api/withdraw', {
+    const res = await fetch('https://crx-auth.onrender.com/api/withdraw', {  // 👈 CHANGED
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

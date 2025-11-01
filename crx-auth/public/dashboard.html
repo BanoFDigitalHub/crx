@@ -1448,13 +1448,19 @@ body {
     </svg>
     <span>Profile</span>
   </div>
-</div>
+</div><script>
+// ==========================
+// 🌐 API BASE URL (Central for future changes)
+// ==========================
+const API_BASE = 'https://crx-auth.onrender.com'; // ← Future me sirf yahan change karna
 
-<script>
+// ==========================
+// Plans & Withdrawals Data
+// ==========================
 const plans = [
   { name:"Chain Link", image:"../images/chainlink.jfif", totalInvestment:10, dailyAds:2, dailyProfit:0.5, totalProfit:32.5, durationDays:65 },
   { name:"Ton Coin", image:"../images/toncoin.jfif", totalInvestment:15, dailyAds:3, dailyProfit:1, totalProfit:65, durationDays:65 },
-   { name:"Bitcoin", image:"../images/bitcoin.jfif", totalInvestment:22, dailyAds:4, dailyProfit:1.8, totalProfit:117, durationDays:65 },
+  { name:"Bitcoin", image:"../images/bitcoin.jfif", totalInvestment:22, dailyAds:4, dailyProfit:1.8, totalProfit:117, durationDays:65 },
   { name:"Ethereum", image:"../images/Ethereum.jfif", totalInvestment:50, dailyAds:6, dailyProfit:3.5, totalProfit:227.5, durationDays:65 },
 ];
 
@@ -1469,14 +1475,16 @@ const withdrawals = [
   { user: "mark***56", email: "ma***@gmail.com", amount: 156.25 }
 ];
 
+// ==========================
 // Theme Toggle
+// ==========================
 function toggleTheme() {
   const html = document.documentElement;
   const currentTheme = html.getAttribute('data-theme');
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
-  
+
   const icon = document.getElementById('themeIcon');
   if (newTheme === 'dark') {
     icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
@@ -1485,13 +1493,14 @@ function toggleTheme() {
   }
 }
 
+// ==========================
 // Notification Toggle
+// ==========================
 function toggleNotification() {
   const popup = document.getElementById('notificationPopup');
   popup.classList.toggle('active');
 }
 
-// Close notification when clicking outside
 document.addEventListener('click', function(e) {
   const popup = document.getElementById('notificationPopup');
   const bell = document.querySelector('.notification-btn');
@@ -1500,7 +1509,9 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// ==========================
 // Initialize theme
+// ==========================
 const savedTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', savedTheme);
 if (savedTheme === 'dark') {
@@ -1508,26 +1519,28 @@ if (savedTheme === 'dark') {
   icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
 }
 
+// ==========================
 // FAQ Toggle
+// ==========================
 function toggleFaq(element) {
   const item = element.parentElement;
   const answer = item.querySelector('.faq-answer');
   const isActive = item.classList.contains('active');
-  
-  // Close all other FAQs
+
   document.querySelectorAll('.faq-item').forEach(faq => {
     faq.classList.remove('active');
     faq.querySelector('.faq-answer').style.maxHeight = '0';
   });
-  
-  // Toggle current FAQ
+
   if (!isActive) {
     item.classList.add('active');
     answer.style.maxHeight = answer.scrollHeight + 'px';
   }
 }
 
+// ==========================
 // Render Plans
+// ==========================
 function renderPlans() {
   const grid = document.getElementById('plansGrid');
   grid.innerHTML = '';
@@ -1547,7 +1560,9 @@ function renderPlans() {
   });
 }
 
+// ==========================
 // Render Withdrawals
+// ==========================
 function renderWithdrawals() {
   const list = document.getElementById('withdrawalsList');
   list.innerHTML = '';
@@ -1567,7 +1582,9 @@ function renderWithdrawals() {
   });
 }
 
+// ==========================
 // Load Dashboard
+// ==========================
 async function loadDashboard() {
   const token = sessionStorage.getItem('token');
   if (!token) {
@@ -1576,28 +1593,25 @@ async function loadDashboard() {
   }
 
   try {
-    const res = await fetch('/api/auth/dashboard', {
+    const res = await fetch(`${API_BASE}/api/auth/dashboard`, { // ← API_BASE used
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const result = await res.json();
 
     if (result.name) {
-      // Hide skeleton, show content
       document.getElementById('loadingSkeleton').classList.add('hidden');
       document.getElementById('mainContent').classList.remove('hidden');
 
-      // Update user info
       document.getElementById('userName').textContent = result.name;
       document.getElementById('referralCode').textContent = result.referralCode || '-';
       document.getElementById('referralCount').textContent = result.referralCount || 0;
       document.getElementById('walletBalance').textContent = (result.wallet || 0).toFixed(2);
 
-      // Update plan info
       if (result.activePlan) {
         const startDate = new Date(result.planStartDate || Date.now());
         const expiryDate = new Date(startDate);
         expiryDate.setDate(expiryDate.getDate() + result.activePlan.durationDays);
-        
+
         document.getElementById('planName').textContent = result.activePlan.name;
         document.getElementById('planExpiry').textContent = 'Expires: ' + expiryDate.toLocaleDateString();
         document.getElementById('planStatus').textContent = 'Active';
@@ -1607,7 +1621,6 @@ async function loadDashboard() {
         document.getElementById('notificationMessage').textContent = 'Buy a plan to start earning money!';
       }
 
-      // Render plans and withdrawals
       renderPlans();
       renderWithdrawals();
     } else {
@@ -1616,7 +1629,6 @@ async function loadDashboard() {
     }
   } catch (err) {
     console.error(err);
-    // Show content even if API fails (for demo purposes)
     document.getElementById('loadingSkeleton').classList.add('hidden');
     document.getElementById('mainContent').classList.remove('hidden');
     renderPlans();
@@ -1624,7 +1636,9 @@ async function loadDashboard() {
   }
 }
 
+// ==========================
 // Logout
+// ==========================
 function logout() {
   if (confirm('Are you sure you want to logout?')) {
     sessionStorage.removeItem('token');
@@ -1632,12 +1646,14 @@ function logout() {
   }
 }
 
-// Auto-refresh wallet balance
+// ==========================
+// Auto-refresh Wallet Balance
+// ==========================
 setInterval(async () => {
   const token = sessionStorage.getItem('token');
   if (!token) return;
   try {
-    const res = await fetch('/api/auth/dashboard', {
+    const res = await fetch(`${API_BASE}/api/auth/dashboard`, { // ← API_BASE used
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const result = await res.json();
@@ -1649,8 +1665,11 @@ setInterval(async () => {
   }
 }, 30000);
 
+// ==========================
 // Initialize
+// ==========================
 loadDashboard();
 </script>
+
 </body>
 </html>

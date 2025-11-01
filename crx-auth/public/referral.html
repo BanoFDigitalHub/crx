@@ -1543,10 +1543,11 @@ function toggleAccordion(element) {
     content.style.maxHeight = content.scrollHeight + 'px';
   }
 }
+
 // ======================
-// Backend API Base Setup
+// ✅ Backend API Base Setup - CHANGED
 // ======================
-const API_BASE = `${window.location.protocol}//${window.location.host}`;
+const API_BASE = 'https://crx-auth.onrender.com';  // 👈 CHANGED FROM DYNAMIC TO FIXED URL
 
 // ======================
 // Data Management
@@ -1562,10 +1563,10 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  // Load referral data
+  // ✅ CHANGE #1: Load referral data API
   async function loadReferralData() {
     try {
-      const res = await fetch(`${API_BASE}/api/referral/data`, {
+      const res = await fetch(`${API_BASE}/api/referral/data`, {  // Uses API_BASE
         headers: { 'Authorization': 'Bearer ' + token }
       });
 
@@ -1723,7 +1724,7 @@ document.addEventListener("DOMContentLoaded", function () {
     listEl.innerHTML = html;
   }
 
-  // Claim reward
+  // ✅ CHANGE #2: Claim reward API
   async function claimReward() {
     if (!confirm('Claim your reward? This will be added to your wallet instantly.')) return;
 
@@ -1731,7 +1732,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (claimBtn) claimBtn.disabled = true, claimBtn.className = 'claim-btn locked', claimBtn.innerHTML = '<span>Processing...</span>';
 
     try {
-      const res = await fetch(`${API_BASE}/api/referral/claim`, {
+      const res = await fetch(`${API_BASE}/api/referral/claim`, {  // Uses API_BASE
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
       });
@@ -1798,7 +1799,6 @@ document.addEventListener("DOMContentLoaded", function () {
   loadReferralData();
   setInterval(loadReferralData, 30000);
 });
-
 </script>
 </body>
 </html>

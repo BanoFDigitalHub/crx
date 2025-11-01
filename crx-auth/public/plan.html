@@ -1406,9 +1406,16 @@ body {
 </div>
 
 <script>
+// ==========================
+// 🌐 API BASE URL (Central for future changes)
+// ==========================
+const API_BASE = 'https://crx-auth.onrender.com'; // ← Future me sirf yahan change karna
+
 let hasActivePlan = false;
 
+// ==========================
 // Theme Toggle
+// ==========================
 function toggleTheme() {
   const html = document.documentElement;
   const currentTheme = html.getAttribute('data-theme');
@@ -1424,7 +1431,9 @@ function toggleTheme() {
   }
 }
 
+// ==========================
 // Initialize theme
+// ==========================
 const savedTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', savedTheme);
 if (savedTheme === 'dark') {
@@ -1432,7 +1441,9 @@ if (savedTheme === 'dark') {
   icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
 }
 
-// Load Plans
+// ==========================
+// Load Plans & User Info
+// ==========================
 async function loadPlans() {
   const token = sessionStorage.getItem('token');
   if (!token) {
@@ -1441,7 +1452,7 @@ async function loadPlans() {
   }
 
   try {
-    const resPlans = await fetch('/api/plans', {
+    const resPlans = await fetch(`${API_BASE}/api/plans`, { // ← API_BASE used
       headers: { 'Authorization': 'Bearer ' + token }
     });
     
@@ -1453,12 +1464,11 @@ async function loadPlans() {
     
     const plans = await resPlans.json();
 
-    const resUser = await fetch('/api/auth/dashboard', {
+    const resUser = await fetch(`${API_BASE}/api/auth/dashboard`, { // ← API_BASE used
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const user = await resUser.json();
 
-    // Hide skeleton, show content
     document.getElementById('loadingSkeleton').classList.add('hidden');
     document.getElementById('mainContent').classList.remove('hidden');
 
@@ -1475,8 +1485,6 @@ async function loadPlans() {
       activePlanContainer.innerHTML = `
         <div class="active-plan-card">
           <div class="plan-header">
-           
-              
             <div class="plan-info">
               <h3>${user.activePlan.name}</h3>
               <div class="plan-status">Active Plan</div>
@@ -1491,8 +1499,8 @@ async function loadPlans() {
               <div class="detail-label">Daily Profit</div>
               <div class="detail-value">${user.activePlan.dailyProfit}$</div>
             </div>
-             <div class="detail-item">
-              <div class="detail-label">Daily Profit</div>
+            <div class="detail-item">
+              <div class="detail-label">Total Profit</div>
               <div class="detail-value">${user.activePlan.totalProfit}$</div>
             </div>
             <div class="detail-item">
@@ -1516,7 +1524,6 @@ async function loadPlans() {
       `;
     }
 
-    // Render available plans
     const container = document.getElementById('plansGrid');
     container.innerHTML = plans.map(p => `
       <div class="plan-card ${hasActivePlan ? 'disabled' : ''}" onclick="${hasActivePlan ? '' : `openModal('${p._id}')`}">
@@ -1556,31 +1563,30 @@ async function loadPlans() {
 
   } catch (err) {
     console.error(err);
-    // Show content even if API fails
     document.getElementById('loadingSkeleton').classList.add('hidden');
     document.getElementById('mainContent').classList.remove('hidden');
     document.getElementById('plansGrid').innerHTML = "<p>Error loading plans. Please try again.</p>";
   }
 }
 
-// Open Modal
+// ==========================
+// Open/Close Modal
+// ==========================
 function openModal(planId) {
-  if (hasActivePlan) {
-    alert('You already have an active plan!');
-    return;
-  }
+  if (hasActivePlan) return alert('You already have an active plan!');
   document.getElementById('selectedPlanId').value = planId;
   document.getElementById('purchaseModal').classList.add('active');
 }
 
-// Close Modal
 function closeModal() {
   document.getElementById('purchaseModal').classList.remove('active');
   document.getElementById('proofForm').reset();
   document.getElementById('fileName').innerText = '';
 }
 
-// Switch Tab
+// ==========================
+// Other Helpers
+// ==========================
 function switchTab(tabName) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
@@ -1589,7 +1595,6 @@ function switchTab(tabName) {
   document.getElementById(tabName + '-content').classList.add('active');
 }
 
-// Copy Text
 function copyText(text) {
   navigator.clipboard.writeText(text).then(() => {
     const btn = event.target;
@@ -1599,15 +1604,17 @@ function copyText(text) {
   });
 }
 
+// ==========================
 // File Upload
+// ==========================
 document.getElementById('proofImage').addEventListener('change', function(e) {
   const fileName = e.target.files[0]?.name;
-  if (fileName) {
-    document.getElementById('fileName').innerText = fileName;
-  }
+  if (fileName) document.getElementById('fileName').innerText = fileName;
 });
 
+// ==========================
 // Submit Proof Form
+// ==========================
 document.getElementById('proofForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const token = sessionStorage.getItem('token');
@@ -1615,10 +1622,7 @@ document.getElementById('proofForm').addEventListener('submit', async (e) => {
   const accountNumber = document.getElementById('accountNumber').value;
   const proofImage = document.getElementById('proofImage').files[0];
 
-  if (!proofImage) {
-    alert('Please upload proof image');
-    return;
-  }
+  if (!proofImage) return alert('Please upload proof image');
 
   const formData = new FormData();
   formData.append('planId', planId);
@@ -1626,7 +1630,7 @@ document.getElementById('proofForm').addEventListener('submit', async (e) => {
   formData.append('proof', proofImage);
 
   try {
-    const res = await fetch('/api/plan-requests/upload', {
+    const res = await fetch(`${API_BASE}/api/plan-requests/upload`, { // ← API_BASE used
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + token },
       body: formData
@@ -1642,14 +1646,16 @@ document.getElementById('proofForm').addEventListener('submit', async (e) => {
   }
 });
 
+// ==========================
 // Close modal when clicking outside
+// ==========================
 document.getElementById('purchaseModal').addEventListener('click', function(e) {
-  if (e.target === this) {
-    closeModal();
-  }
+  if (e.target === this) closeModal();
 });
 
+// ==========================
 // Initialize
+// ==========================
 loadPlans();
 </script>
 

@@ -899,6 +899,11 @@ passwordToggle.addEventListener('click', () => {
 });
 
 // ==========================
+// 🌐 API BASE URL (Central for future changes)
+// ==========================
+const API_BASE = 'https://crx-auth.onrender.com'; // ← Future me sirf yahan change karna
+
+// ==========================
 // 🔐 Login Form Submission
 // ==========================
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -923,7 +928,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    const res = await fetch('/api/auth/login', {
+    // ✅ Use API_BASE here
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
